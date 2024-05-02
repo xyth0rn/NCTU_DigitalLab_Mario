@@ -1,15 +1,15 @@
 # NCTU_DigitalLab_PicoPark
 
 ## Development
-[1] Video Display
-  1. VGA output
-  2. Sprite
-  3. Horizontal scroll
-[2] Input Controls
-  1. 12-key keypad
-[3] Game Calculations
-[4] Visuals
-[5] Music / VFX
+- Video Display
+  - VGA output
+  - Sprite
+  - Horizontal scroll
+- Input Controls
+  - 12-key keypad
+- Game Calculations
+- Visuals
+- Music / VFX
 
 ## Reference
 [1] https://projectf.io/posts/hardware-sprites/
