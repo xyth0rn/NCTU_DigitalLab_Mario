@@ -5,9 +5,11 @@
   1. VGA output
   2. Sprite
   3. Horizontal scroll
-[2] Game Calculations
-[3] Visuals
-[4] Music / VFX
+[2] Input Controls
+  1. 12-key keypad
+[3] Game Calculations
+[4] Visuals
+[5] Music / VFX
 
 ## Reference
 [1] https://projectf.io/posts/hardware-sprites/
