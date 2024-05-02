@@ -23,9 +23,8 @@
   - Sprite
     > Bitwise compare `ch_pos` with current frame. If current bit is a character and current bit is not transparent, output pixel of character; otherwise output pixel of background.<br>
     > Does the same for interactive objects.<br>
-    > Output result `image` to video buffer
   - Video Buffer
-    > saves final output `image`
+    > Render sprites and frame together to generate final `image`
 - VGA output
   > print `image` onto screen
 
