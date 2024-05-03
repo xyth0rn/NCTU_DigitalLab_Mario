@@ -38,6 +38,6 @@
 
 [3] soundtracks https://downloads.khinsider.com/game-soundtracks/album/pico-park-soundtrack-2021
 
-[4]https://picoparkteco.comic.studio/
+[4] https://picoparkteco.comic.studio/
 
-[5] !(jpg to bmp converter)[https://cloudconvert.com/]
+[5] jpg to bmp converter https://cloudconvert.com/
