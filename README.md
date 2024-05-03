@@ -3,7 +3,9 @@
 ## System Architecture
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/4d50980a-25b9-4fd3-a09b-60937b95c67d)
 
-
+## System Specification
+- FPGA Board: Nexys4 DDR
+- Screen Resolution: 640 x 480 pixels
 ## Module Development and Method
 - Input Controls
   - 12-key Keypad
