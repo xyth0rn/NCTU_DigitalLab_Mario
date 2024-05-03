@@ -12,7 +12,7 @@
 - Prepare ROM file
   - Convert `.jpg` file to 24-bit `.bmp` file (online converter)
     - 24-bit means RGB color code, 8-bit per color (ex. red = ff0000)
-  - Convert `.bmp` file to `.coe` file (BMP2Mif desktop app)
+  - Convert `.bmp` file to `.coe` file (BMP2Mif desktop app)<br>
     ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/610959de-cc4f-4f75-9921-567c72baf535)
 
   - Convert `.coe` file from 24-bit to 12-bit using regex (8-bit per color to 4-bit per color)
