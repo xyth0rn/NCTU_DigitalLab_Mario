@@ -19,6 +19,7 @@ module spring( input sys_clk,
       spring_pos_X = 9'd50; //absolute X-coordinate 
       spring_pos_Y = 9'd50; //absolute Y-coordinate
     end
+  
   assign enable = ((spring_pos_X <= scroll_right_border) && (spring_pos_X + 9'd16 >= scroll_left_border));
   
   always@(posedge sys_clk)
