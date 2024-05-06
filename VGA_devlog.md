@@ -29,7 +29,8 @@
 
 - 100MHz to 25MHz using Xilinx IP Clocking Wizard
   - _Don't use homemade counter-based frequency divider or may cause severe clock jittering_
-  - `CLK_IN1` = `sys clock `
+  - change `CLK_IN1` board interface from `custom` to `sys clock `
+  - rename `clk_out1` to `clk_25mhz`
   - Primitive = `PLL`
   - output frequency request = `25MHz`
   - disable `reset`, `power_down`, and `locked`
@@ -37,6 +38,7 @@
 - VRAM using Xilinx IP Block Memory Generator
   - interface type = `Native`
   - memory type = `Single Port ROM`
+  - Enable Port Type = `always enabled`
   - Port A width = `12`  (∵ 4-bit per color)
   - Port A depth = `307200 (∵ 680 x 480 pixels)
   - Load init file = `.coe file location`
