@@ -8,11 +8,13 @@ notes:
 
 Yander 2024/05/06 11:59PM
 scroll.v
+
   1. control the movement of bg by the position of our character.
   2. the bg_pos output indicate the left boundary of memory accessing.
   3. find out the capacity limitation of ROM, we can only put one single frame in it. So we may consider circular map.
 
 VGA.v
+
 modified the VGA module, change the starting point of ROM reading by bg position
 
 test for circulum scrolling:
