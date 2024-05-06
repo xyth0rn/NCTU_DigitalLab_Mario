@@ -9,6 +9,8 @@
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/a09fb9c4-110b-41d8-9d36-061e1a5e5836)
 
 ## VGA from ROM
+Create a VGA driver prototype that is able to print a image (saved in ROM) onto the screen.
+
 - Prepare ROM file
   - Convert `.jpg` file to 24-bit `.bmp` file (online converter)
     - 24-bit means RGB color code, 8-bit per color (ex. red = ff0000)
