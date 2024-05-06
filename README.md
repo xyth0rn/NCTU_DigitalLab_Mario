@@ -44,5 +44,3 @@
 [4] https://picoparkteco.comic.studio/
 
 [5] jpg to bmp converter https://cloudconvert.com/
-
-[6] http://www.corecourse.cn/forum.php?mod=viewthread&tid=28465
