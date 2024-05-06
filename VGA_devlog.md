@@ -56,3 +56,4 @@ Create a VGA driver prototype that is able to print a image (saved in ROM) onto 
 
 ## Reference
 [1] https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion
+[2] http://www.tinyvga.com/vga-timing
