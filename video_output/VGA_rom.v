@@ -103,14 +103,14 @@ module VGA_output(
     wire dat_act;               // flag for active area of data
 
     
-    parameter   VGA_HS_end=10'd95,
-                hdat_begin=10'd143,
-                hdat_end=10'd783,
-                hpixel_end=10'd799,
-                VGA_VS_end=10'd1,
-                vdat_begin=10'd34,
-                vdat_end=10'd514,
-                vline_end=10'd524;
+    parameter   VGA_HS_end = 10'd95,      // Tpw
+                hdat_begin = 10'd143,     // Tpw + Tbp
+                hdat_end   = 10'd783,     // Tpw + Tbp + Tdisp
+                hpixel_end = 10'd799,     // Ts
+                VGA_VS_end = 10'd1,       // Tpw
+                vdat_begin = 10'd34,      // Tpw + Tbp
+                vdat_end   = 10'd514,     // Tpw + Tbp + Tdisp
+                vline_end  = 10'd524;     // Ts
 
     assign x_pixel = dat_act? (hcount_r-hdat_begin) : 10'd0;
     assign y_pixel = dat_act? (vcount_r-vdat_begin) : 10'd0;
