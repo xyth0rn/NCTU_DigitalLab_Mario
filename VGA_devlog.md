@@ -52,9 +52,15 @@ Create a VGA driver prototype that is able to print a image (saved in ROM) onto 
 - VGA driving module: `VGA_output`
   - reads data from data input and scan-prints onto VGA screen
 
-## VGA from RAM
+## VGA from VRAM (Video RAM)
+In order to show sprites and other objects above the ROM background, a read-and-write VRAM should be constructed.
+A VRAM is a video buffer that saves the rendered image ready to be shown on-screen.
+This means that the `VRAM_ctrl` module should compare the positions and transparency of sprites to the background and
+determine either the color of the sprite or the background should be saved to the VRAM at each pixel.
 
 ## Reference
 [1] https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
 [2] http://www.tinyvga.com/vga-timing <br>
 [3] https://projectf.io/posts/video-timings-vga-720p-1080p/ <br>
+[4] http://ca.olin.edu/2005/fpga_sprites/new_plan.htm <br>
+[5] http://ca.olin.edu/2005/fpga_sprites/results.htm <br>
