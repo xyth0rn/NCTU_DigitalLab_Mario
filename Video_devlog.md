@@ -1,4 +1,4 @@
-# Video Prpcoessor Development Log
+# Video Processor Development Log
 ## Literature Review
 - CRT-based VGA
 - 640 x 480 pixels, 60Hz refresh rate
