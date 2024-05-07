@@ -1,4 +1,4 @@
-# VGA Development Log
+# Video Prpcoessor Development Log
 ## Literature Review
 - CRT-based VGA
 - 640 x 480 pixels, 60Hz refresh rate
@@ -7,6 +7,7 @@
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/553f7410-d597-47a2-9914-54d34c107768)
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/cd3da4d0-a0d1-44a3-a51e-2841099a94de)
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/a09fb9c4-110b-41d8-9d36-061e1a5e5836)
+
 
 ## VGA from ROM
 Create a VGA driver prototype that is able to print a image (saved in ROM) onto the screen.
@@ -52,11 +53,43 @@ Create a VGA driver prototype that is able to print a image (saved in ROM) onto 
 - VGA driving module: `VGA_output`
   - reads data from data input and scan-prints onto VGA screen
 
+
 ## VGA from VRAM (Video RAM)
 In order to show sprites and other objects above the ROM background, a read-and-write VRAM should be constructed.
 A VRAM is a *video buffer* that saves the rendered image ready to be shown on-screen.
 This means that the `VRAM_ctrl` module should compare the positions and transparency of sprites to the background and
-determine either the color of the sprite or the background should be saved to the VRAM at each pixel.
+determine either the color of the sprite or the background should be saved to the VRAM at each pixel. <br>
+
+- 100MHz to 25MHz using Xilinx IP Clocking Wizard
+  - _Don't use homemade counter-based frequency divider or may cause severe clock jittering_
+  - change `CLK_IN1` board interface from `custom` to `sys clock `
+  - Primitive = `PLL`
+  - output frequency request = `25MHz`
+  - disable `reset`, `power_down`, and `locked`
+
+- VRAM using Xilinx IP Block Memory Generator
+  - interface type = `Native` 
+  - memory type = `True Dual Port RAM`
+    > True Dual Port RAM: allows simultaneous read and write (4 data buses) <br>
+    > Simple Dual Port RAM: can only read or write at the moment (2 data buses)
+  - Enable Port Type = `always enabled`
+  - Load init file = `.coe file location`
+  - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
+
+
+### Sprite
+- Reads the current VGA printing coordinates, sprite on-screen coordinates, sprite enable, and sprite RAM.
+- Checks if the sprite is within screen boundary (aka `block`)
+- Sprite RAM using Xilinx IP Block Memory Generator
+  - interface type = `Native` 
+  - memory type = `Single Port RAM`
+  - Enable Port Type = `always enabled`
+  - Load init file = `.coe file location`
+  - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
+- Compares sprite with vram to decide which color data to print onto screen
+
+
+### Background Scrolling
 
 ## Reference
 [1] https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
@@ -64,3 +97,4 @@ determine either the color of the sprite or the background should be saved to th
 [3] https://projectf.io/posts/video-timings-vga-720p-1080p/ <br>
 [4] http://ca.olin.edu/2005/fpga_sprites/new_plan.htm <br>
 [5] http://ca.olin.edu/2005/fpga_sprites/results.htm <br>
+[6] https://support.xilinx.com/s/question/0D52E00006hpaYzSAI/difference-between-bram-configurations-tdp-vs-sdp?language=en_US <br>
