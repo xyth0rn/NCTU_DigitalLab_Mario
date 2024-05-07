@@ -25,7 +25,6 @@
     ```
     memory_initialization_radix = 16;
     memory_initialization_vector =
-     
     ```
 
 ## VGA from ROM
