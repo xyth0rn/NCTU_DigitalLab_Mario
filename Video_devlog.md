@@ -30,7 +30,8 @@
 However, a single 12-bit RGB COE file of a 640x480 picture fills the block memory of the Nexys4 DDR up to approximately 70%.
 This means we would have to compress the size of pictures if we want to achieve horizontal scrolling background.
 
-### 24-bit PNG to 9-bit COE
+### 32-bit PNG to 9-bit COE
+> 32-bit is RGBA color coding, 8-bit for each variable.
 Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the `.png` file. Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then concatenate the three into a 9-bit value. Write the 9-bit value of each pixel into an output `.coe` file.
 
 #### Reference
