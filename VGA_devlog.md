@@ -54,7 +54,7 @@ Create a VGA driver prototype that is able to print a image (saved in ROM) onto 
 
 ## VGA from VRAM (Video RAM)
 In order to show sprites and other objects above the ROM background, a read-and-write VRAM should be constructed.
-A VRAM is a video buffer that saves the rendered image ready to be shown on-screen.
+A VRAM is a *video buffer* that saves the rendered image ready to be shown on-screen.
 This means that the `VRAM_ctrl` module should compare the positions and transparency of sprites to the background and
 determine either the color of the sprite or the background should be saved to the VRAM at each pixel.
 
