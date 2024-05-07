@@ -9,14 +9,14 @@
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/a09fb9c4-110b-41d8-9d36-061e1a5e5836)
 
 ## Convert image files from JPG/JPEG/PNG to COE
-### 24-bit RGB JPG to 8-bit RGB COE
+### 24-bit RGB JPG to 12-bit RGB COE
 - Convert `.jpg` file to 24-bit `.bmp` file (online converter)
   - 24-bit means RGB color code, 8-bit per color (ex. red = ff0000)
   
 - Convert `.bmp` file to `.coe` file (BMP2Mif desktop app)<br>
   ![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/610959de-cc4f-4f75-9921-567c72baf535)
 
-- Convert `.coe` file from 24-bit to 12-bit using regex (8-bit per color to 4-bit per color)
+- Convert `.coe` file from 24-bit to 12-bit using regex (8-bit * 3  ->  4-bit * 3)
   - *Under ubuntu command line*
   - run command `sed 's/.//6' filename.coe > newFile_1.coe`      (ex. ff0000 -> ff000)
   - run command `sed 's/.//4' newFile_1.coe > newFile_2.coe`     (ex. ff000  ->  ff00)
@@ -26,6 +26,13 @@
     memory_initialization_radix = 16;
     memory_initialization_vector =
     ```
+
+However, a single 12-bit RGB COE file of a 640x480 picture fills the block memory of the Nexys4 DDR up to approximately 70%.
+This means we would have to compress the size of pictures if we want to achieve horizontal scrolling background.
+
+### 24-bit PNG to 9-bit COE
+Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the `.png` file. Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then concatenate the three into a 9-bit value. Write the 9-bit value of each pixel into an output `.coe` file.
+
 
 ## VGA from ROM
 Create a VGA driver prototype that is able to print a image (saved in ROM) onto the screen.
