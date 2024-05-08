@@ -47,6 +47,11 @@ fixed the freqency problem:
   
 the jump and fall(gravity system) function:
 
-   1.written in finite state machine.
+  1.written in finite state machine.
    (draw the state graph)
-   2. gravity system means that the character will fall if there's no blocking object below it.
+  2. gravity system means that the character will fall if there's no blocking object below it.
+
+more things to do:
+
+  1.change the constant in my code to parameter.
+  2.handle the blocking area.
