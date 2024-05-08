@@ -10,8 +10,8 @@ Yander 2024/05/06 11:59PM
 scroll.v
 
   1. control the movement of bg by the position of our character.
-  2. the bg_pos output indicate the left boundary of memory accessing.
-  3. find out the capacity limitation of ROM, we can only put one single frame in it. So we may consider circular map.
+  2. the bg_pos output indicate the left boundary of memory accessing. (also absolute coordinate)
+  3. we need to find out the capacity limitation of ROM. 
 
 VGA.v
 
@@ -28,3 +28,12 @@ unfinished parts:
   2. blocking
   3. jump/fall of the main character
   4. all the objects' behavior
+
+Yander 2024/05/08 05:33PM
+fixed the freqency problem:
+  -the character module: using 2Hz to check the input from keypad
+  -the scrolling module: using 60Hz to update the background's coordinate.
+  -the ROM accessing part: 25MHz.
+  
+the jump and fall function:
+   1.written in finite state machine.
