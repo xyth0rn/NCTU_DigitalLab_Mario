@@ -57,7 +57,7 @@ always@(posedge clk_2hz) begin //next state logic
 
 		end
 	
-        FALLING: begin
+		FALLING: begin
             if(~(blk_map_X[char_X]&blk_map_Y[char_Y+10'b1]) && char_Y<=10'd400) state<=FALLING;
 			else state<=IDLE;
         end
