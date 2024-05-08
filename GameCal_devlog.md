@@ -1,5 +1,5 @@
 # Yander 2024/05/03 08:23AM
-*char.v (tested using testbench)*
+**char.v (tested using testbench)**
 notes: 
   1. the output of the character location is a absolute coordinate.
   2. all IO with coordinate system is written in two reg, X and Y.
@@ -8,13 +8,13 @@ notes:
 
 # Yander 2024/05/06 11:59PM
 (idea demo diagram here)
-*scroll.v*
+**scroll.v**
 
   1. control the movement of bg by the position of our character.
   2. the bg_pos output indicate the left boundary of memory accessing. (also absolute coordinate)
   3. we need to find out the capacity limitation of ROM. 
 
-*VGA.v*
+**VGA.v**
 
 modified the VGA module, change the starting point of ROM reading by bg position
 
@@ -44,7 +44,7 @@ fixed the freqency problem:
   
   -the ROM accessing part: 25MHz.
   
-*the jump and fall(gravity system) function:*
+**the jump and fall(gravity system) function:**
 
   1.written in finite state machine.
    (draw the state graph)
@@ -57,7 +57,7 @@ more things to do:
 
 # Yander 2024/05/09 00:43AM
 
-*The blocking area develop:*
+**The blocking area develop:**
 add another block memory which store the same .coe file as the map. Because I'm not sure if two modules can access one memory at the same time.
 
 read the memory of four direction every time and update the "mobility status" of this current block. The status will help the following code to decide whether the move request is successful or not.
