@@ -36,6 +36,7 @@ Yander 2024/05/08 05:33PM
 
 connected the character and scrolling module to the new VGA output module with sprite.
 (video)
+*note: the upper-left corner is (0,0), not the lower-left corner
 
 fixed the freqency problem:
 
