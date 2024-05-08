@@ -45,7 +45,8 @@ fixed the freqency problem:
   
   -the ROM accessing part: 25MHz.
   
-the jump and fall function:
+the jump and fall(gravity system) function:
 
    1.written in finite state machine.
    (draw the state graph)
+   2. gravity system means that the character will fall if there's no blocking object below it.
