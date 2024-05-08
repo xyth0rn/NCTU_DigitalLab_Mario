@@ -40,4 +40,5 @@ fixed the freqency problem:
   -the ROM accessing part: 25MHz.
   
 the jump and fall function:
+
    1.written in finite state machine.
