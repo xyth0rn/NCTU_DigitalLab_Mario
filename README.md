@@ -32,7 +32,7 @@
   > print `image` onto screen
 
 ## Development and Method
-[VGA Devlog](VGA_devlog.md)
+[Video Development Log](Video_devlog.md)
 
 ## Reference
 [1] https://projectf.io/posts/hardware-sprites/
