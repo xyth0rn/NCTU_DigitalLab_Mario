@@ -117,7 +117,7 @@ Overlays movable sprites on top of VRAM.
 work in progress
 
 ## Background Scrolling
-work in progress (hasn't integrate yet)
+See Game Calculation Development Log
 
 
 ## Reference
