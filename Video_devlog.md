@@ -38,7 +38,7 @@ Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then
 Write the 9-bit value of each pixel into an output COE file.
 
 - Save PNG file in the same directory as `32bitpng_to_9bitcoe.py` (the converter)
-- At windows cmd, run `python 32bitpng_to_9bitcoe.py`
+- At windows cmd, run `$ python 32bitpng_to_9bitcoe.py`
 - Type in the filename of the PNG file
 - Receive COE file under the same directory named `<in_filename>_9bit.coe`
 
