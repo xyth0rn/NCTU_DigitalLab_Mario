@@ -48,3 +48,4 @@ fixed the freqency problem:
 the jump and fall function:
 
    1.written in finite state machine.
+   (draw the state graph)
