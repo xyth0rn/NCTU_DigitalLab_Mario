@@ -10,7 +10,7 @@
 
 ## Convert image files from JPG/JPEG/PNG to COE
 ### 24-bit RGB JPG to 12-bit RGB COE
-- Convert `.jpg` file to 24-bit `.bmp` file (online converter)
+- Convert JPG file to 24-bit BMP file (online converter)
   - 24-bit means RGB color code, 8-bit per color (ex. red = ff0000)
   
 - Convert `.bmp` file to `.coe` file (BMP2Mif desktop app)<br>
@@ -33,9 +33,14 @@ This means we would have to compress the size of pictures if we want to achieve 
 ### 32-bit PNG to 9-bit COE
 > 32-bit is RGBA color coding, 8-bit for each variable.
 
-Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the `.png` file.
+Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the PNG file.
 Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then concatenate the three into a 9-bit value.
-Write the 9-bit value of each pixel into an output `.coe` file.
+Write the 9-bit value of each pixel into an output COE file.
+
+- Save PNG file in the same directory as `32bitpng_to_9bitcoe.py` (the converter)
+- At windows cmd, run `python 32bitpng_to_9bitcoe.py`
+- Type in the filename of the PNG file
+- Receive COE file under the same directory named `<in_filename>_9bit.coe`
 
 #### Reference
 - https://stackoverflow.com/questions/12807669/how-to-convert-an-rgb-color-to-the-closest-matching-8-bit-color?fbclid=IwZXh0bgNhZW0CMTAAAR2quU1vXapxB_7i4PH6pAtKHepgDO9oD6pAL2jqr80RxePaxBntHD00WGc_aem_ATH-CjI_HFjCCoazRLQmv4BbaiWMK8Nxit4m6MyYDwNAJm2gAfIcPWPK-v-Pvxw9WEGhIZ2T_s7TtT72Q-HeeF6N <br>
