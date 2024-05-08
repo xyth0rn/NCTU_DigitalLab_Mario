@@ -33,13 +33,15 @@ This means we would have to compress the size of pictures if we want to achieve 
 ### 32-bit PNG to 9-bit COE
 > 32-bit is RGBA color coding, 8-bit for each variable.
 
-Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the `.png` file. Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then concatenate the three into a 9-bit value. Write the 9-bit value of each pixel into an output `.coe` file.
+Using the Python library Image (from PIL), extract the RGBA value (`A` = opacity) of each pixel from the `.png` file.
+Convert the 8-bit R/G/B values to 3-bit binary values (abort value of `A`), then concatenate the three into a 9-bit value.
+Write the 9-bit value of each pixel into an output `.coe` file.
 
 #### Reference
-[1] https://stackoverflow.com/questions/12807669/how-to-convert-an-rgb-color-to-the-closest-matching-8-bit-color?fbclid=IwZXh0bgNhZW0CMTAAAR2quU1vXapxB_7i4PH6pAtKHepgDO9oD6pAL2jqr80RxePaxBntHD00WGc_aem_ATH-CjI_HFjCCoazRLQmv4BbaiWMK8Nxit4m6MyYDwNAJm2gAfIcPWPK-v-Pvxw9WEGhIZ2T_s7TtT72Q-HeeF6N <br>
-[2] https://stackoverflow.com/questions/138250/how-to-read-the-rgb-value-of-a-given-pixel-in-python <br>
-[3] https://www.browserstack.com/guide/how-to-use-css-rgba <br>
-[4] https://stackoverflow.com/questions/5676646/how-can-i-fill-out-a-python-string-with-spaces <br>
+- https://stackoverflow.com/questions/12807669/how-to-convert-an-rgb-color-to-the-closest-matching-8-bit-color?fbclid=IwZXh0bgNhZW0CMTAAAR2quU1vXapxB_7i4PH6pAtKHepgDO9oD6pAL2jqr80RxePaxBntHD00WGc_aem_ATH-CjI_HFjCCoazRLQmv4BbaiWMK8Nxit4m6MyYDwNAJm2gAfIcPWPK-v-Pvxw9WEGhIZ2T_s7TtT72Q-HeeF6N <br>
+- https://stackoverflow.com/questions/138250/how-to-read-the-rgb-value-of-a-given-pixel-in-python <br>
+- https://www.browserstack.com/guide/how-to-use-css-rgba <br>
+- https://stackoverflow.com/questions/5676646/how-can-i-fill-out-a-python-string-with-spaces <br>
 
 ## VGA from ROM
 Create a VGA driver prototype that is able to print a image (saved in ROM) onto the screen.
@@ -91,7 +93,7 @@ determine either the color of the sprite or the background should be saved to th
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 
 
-### Sprite
+## Sprite
 Overlays movable sprites on top of VRAM.
 
 - Reads the current VGA printing coordinates, sprite on-screen coordinates, sprite enable, and sprite RAM.
@@ -104,13 +106,17 @@ Overlays movable sprites on top of VRAM.
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 - Compares sprite with vram to decide which color data to print onto screen
 
+## Multi-Sprite VGA
+work in progress
 
-### Background Scrolling
+## Background Scrolling
+work in progress (hasn't integrate yet)
+
 
 ## Reference
-[1] https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
-[2] http://www.tinyvga.com/vga-timing <br>
-[3] https://projectf.io/posts/video-timings-vga-720p-1080p/ <br>
-[4] http://ca.olin.edu/2005/fpga_sprites/new_plan.htm <br>
-[5] http://ca.olin.edu/2005/fpga_sprites/results.htm <br>
-[6] https://support.xilinx.com/s/question/0D52E00006hpaYzSAI/difference-between-bram-configurations-tdp-vs-sdp?language=en_US <br>
+- https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
+- http://www.tinyvga.com/vga-timing <br>
+- https://projectf.io/posts/video-timings-vga-720p-1080p/ <br>
+- http://ca.olin.edu/2005/fpga_sprites/new_plan.htm <br>
+- http://ca.olin.edu/2005/fpga_sprites/results.htm <br>
+- https://support.xilinx.com/s/question/0D52E00006hpaYzSAI/difference-between-bram-configurations-tdp-vs-sdp?language=en_US <br>
