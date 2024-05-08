@@ -1,5 +1,7 @@
 **Yander 2024/05/03 08:23AM**
+
 **char.v (tested using testbench)**
+
 notes: 
   1. the output of the character location is a absolute coordinate.
   2. all IO with coordinate system is written in two reg, X and Y.
@@ -27,6 +29,7 @@ test video using button input:
 fixed the clock issue and the coordinate bug:
 
 unfinished parts:
+
   1. modulize the freqency divider
   2. blocking
   3. jump/fall of the main character
@@ -35,7 +38,9 @@ unfinished parts:
 **Yander 2024/05/08 05:33PM**
 
 connected the character and scrolling module to the new VGA output module with sprite.
+
 (video)
+
 *note: the upper-left corner is (0,0), not the lower-left corner
 
 fixed the freqency problem:
