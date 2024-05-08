@@ -7,6 +7,9 @@ notes:
   4. jump/fall function is incomplete.
 
 Yander 2024/05/06 11:59PM
+
+(idea demo diagram here)
+
 scroll.v
 
   1. control the movement of bg by the position of our character.
@@ -30,6 +33,9 @@ unfinished parts:
   4. all the objects' behavior
 
 Yander 2024/05/08 05:33PM
+
+connected the character and scrolling module to the new VGA output module with sprite.
+(video)
 
 fixed the freqency problem:
 
