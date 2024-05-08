@@ -69,5 +69,6 @@ more things to do:
 add another block memory which store the same .coe file as the map. Because I'm not sure if two modules can access one memory at the same time.
 
 read the memory of four direction every time and update the "mobility status" of this current block. The status will help the following code to decide whether the move request is successful or not.
+(unfinished)
 
 *note: need to put the character in a block that can move horizontally.
