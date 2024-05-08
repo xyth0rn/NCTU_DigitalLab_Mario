@@ -30,6 +30,7 @@ unfinished parts:
   4. all the objects' behavior
 
 Yander 2024/05/08 05:33PM
+
 fixed the freqency problem:
   -the character module: using 2Hz to check the input from keypad
   -the scrolling module: using 60Hz to update the background's coordinate.
