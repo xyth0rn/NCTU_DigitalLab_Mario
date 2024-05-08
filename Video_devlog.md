@@ -28,7 +28,9 @@
     ```
 
 However, a single 12-bit RGB COE file of a 640x480 picture fills the block memory of the Nexys4 DDR up to approximately 70%.
-This means we would have to compress the size of pictures if we want to achieve horizontal scrolling background.
+This means we would have to compress the size of pictures if we want to achieve horizontal scrolling background. <br>
+
+_Note: Python 3.8 and the PILLOW library are required_
 
 ### 32-bit PNG to 9-bit COE
 > 32-bit is RGBA color coding, 8-bit for each variable.
