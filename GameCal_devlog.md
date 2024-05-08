@@ -1,4 +1,4 @@
-# Yander 2024/05/03 08:23AM
+**Yander 2024/05/03 08:23AM**
 **char.v (tested using testbench)**
 notes: 
   1. the output of the character location is a absolute coordinate.
@@ -6,8 +6,10 @@ notes:
   3. the input map is incomplete (it should be embedded in ROM).
   4. jump/fall function is incomplete.
 
-# Yander 2024/05/06 11:59PM
+**Yander 2024/05/06 11:59PM**
+
 (idea demo diagram here)
+
 **scroll.v**
 
   1. control the movement of bg by the position of our character.
@@ -30,7 +32,7 @@ unfinished parts:
   3. jump/fall of the main character
   4. all the objects' behavior
 
-# Yander 2024/05/08 05:33PM
+**Yander 2024/05/08 05:33PM**
 
 connected the character and scrolling module to the new VGA output module with sprite.
 (video)
@@ -58,6 +60,7 @@ more things to do:
 # Yander 2024/05/09 00:43AM
 
 **The blocking area develop:**
+
 add another block memory which store the same .coe file as the map. Because I'm not sure if two modules can access one memory at the same time.
 
 read the memory of four direction every time and update the "mobility status" of this current block. The status will help the following code to decide whether the move request is successful or not.
