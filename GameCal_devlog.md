@@ -55,3 +55,8 @@ more things to do:
 
   1.change the constant in my code to parameter.
   2.handle the blocking area.
+
+Yander 2024/05/09 00:43AM
+
+The blocking area develop:
+add another block memory which store the same .coe file as the map. Because I'm not sure if two modules can access one memory at the same time.
