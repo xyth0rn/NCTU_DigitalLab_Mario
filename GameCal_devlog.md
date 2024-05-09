@@ -74,6 +74,6 @@ read the memory of four direction every time and update the "mobility status" of
 *note: need to put the character in a block that can move horizontally.
 
 *can't change the address directly(need to operate in sequence?)??
-'''
+```
 [Opt 31-67] Problem: A LUT5 cell in the design is missing a connection on input pin I1, which is used by the LUT equation. This pin has either been left unconnected in the design or the connection was removed due to the trimming of unused logic. The LUT cell name is: c1/vram_map/U0/inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[67].ram.r/prim_init.ram/DEVICE_7SERIES.NO_BMM_INFO.SP.SIMPLE_PRIM36.ram_i_2__1.
-'''
+```
