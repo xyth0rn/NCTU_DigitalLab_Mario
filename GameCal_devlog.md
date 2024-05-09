@@ -79,4 +79,4 @@ read the memory of four direction every time and update the "mobility status" of
 ```
 
 2024/05/09 08:36PM
-to do: reset, precise coordinate?, blocking still weird
+to do: reset, precise coordinate?, blocking still weird(why the input from rom is always 1?)
