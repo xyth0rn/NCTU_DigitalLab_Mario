@@ -62,7 +62,7 @@ more things to do:
   1.change the constant in my code to parameter.
   2.handle the blocking area.
 
-# Yander 2024/05/09 00:43AM
+**Yander 2024/05/09 00:43AM**
 
 **The blocking area develop:**
 
@@ -72,3 +72,5 @@ read the memory of four direction every time and update the "mobility status" of
 (unfinished)
 
 *note: need to put the character in a block that can move horizontally.
+
+*can't change the address directly(need to operate in sequence?)??
