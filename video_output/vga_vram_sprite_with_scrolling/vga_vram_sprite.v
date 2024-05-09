@@ -6,7 +6,8 @@ module VGA_SPR_VRAM(
     mov,
     VGA_RGB,    // VGA RGB output
     VGA_HS,     // VGA horizontal sync
-    VGA_VS      // VGA vertical sync
+    VGA_VS,      // VGA vertical sync
+    block
     );
 
     // inputs
@@ -18,6 +19,8 @@ module VGA_SPR_VRAM(
     output [11:0] VGA_RGB;
     output        VGA_HS;
     output        VGA_VS;
+    
+    output block;
     
     // local registers
     reg [8:0] spr_xy;
@@ -58,16 +61,17 @@ module VGA_SPR_VRAM(
     
     //character
 	char c1(
-		.sys_clk(CLK100M), //25mhz but need to change the fd inside too
+		.sys_clk(clk_25mhz), 
 		.mov(mov), //from keypad //u d l r
 		
 		.char_X(char_X),
-		.char_Y(char_Y)
+		.char_Y(char_Y),
+		.block(block)
     );
 	
 	//scrolling
 	scroll sc(
-		.sys_clk(CLK100M), //vga_end
+		.sys_clk(clk_25mhz), //vga_end
 		.char_X(char_X),
 		.char_Y(char_Y),
 		
