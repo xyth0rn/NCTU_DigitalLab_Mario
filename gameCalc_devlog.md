@@ -19,3 +19,18 @@ Scroll screen as the character moves on the screen to prevent character from lea
 
 - Keep character within the center 1/3 area of the screen
 - Update frame coordinates on full map (60hz) depending on character x position
+
+## Blocking Map
+Create a RAM to record where the character are not allowed to enter.
+0 = character can walk through; 1 = character cannot walk through.
+- Landscape
+  - Background map
+- Obstacles
+  - Locations of other npcs (ex. goombas)
+
+### Creating Landscape
+Convert the 32-bit PNG background file into a 1-bit COE file by reading the RGBA value of each pixel. If pixel is transparent (`A` == 0), set the pixel to be 0 (character allowed), othewise set to 0 (character not allowed).
+- Save PNG file in the same directory as `32bitpng_to_1bit_landscape.py` (the converter)
+- At windows cmd, run `$ python 32bitpng_to_1bit_landscape.py`
+- Type in the filename of the PNG file
+- Receive COE file under the same directory named `<in_filename>_1bitcoe_landscape.coe`
