@@ -113,13 +113,6 @@ Overlays movable sprites on top of VRAM.
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 - Compares sprite with vram to decide which color data to print onto screen
 
-## Multi-Sprite VGA
-work in progress
-
-## Background Scrolling
-See Game Calculation Development Log
-
-
 ## Reference
 - https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
 - http://www.tinyvga.com/vga-timing <br>
