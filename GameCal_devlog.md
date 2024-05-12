@@ -94,4 +94,4 @@ problems
 
 3rd edition: record the last-blocking status to help us "bounce back" to avoid the problem I faced in 2nd edition.
 
-to do: reset, precise coordinate?
+to do: reset, precise coordinate, the overall gameCalc devLog
