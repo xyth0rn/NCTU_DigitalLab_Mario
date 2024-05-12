@@ -15,11 +15,13 @@ reg [29:0] counter=30'd0;
 reg clk_2hz=1'd0;
 
 reg forward=1'b1, backward=1'b1, upward=1'b1, downward=1'b1;
-//reg next_mov=1'b0; //the flag for the checking process
+reg last_forward=1'b1, last_backward=1'b1, last_upward=1'b1, last_downward=1'b1;
+
+reg [3:0] last_mov=4'd0; //record the last movement
 
 initial begin 
 	char_X=10'd244;
-	char_Y=10'd300;
+	char_Y=10'd400;
 end
 
 always @(posedge sys_clk) begin
@@ -34,19 +36,29 @@ end
 
 
 always @(posedge clk_2hz) begin
-	//next_mov<=1'b1;
-	
+
     if(char_X==map_l_lim) begin
         //char_X<=char_X; //cannot move anymore
     end
 	else if(mov[1]==1'b1 && backward) begin
 		char_X<=char_X-10'd1; //char_Y<=char_Y;
+		last_mov[1]<=1'b1;
+		last_mov[0]<=1'b0;
 	end
+	else if(backward==1'b0 && last_backward==1'b1) begin
+		char_X<=char_X+10'd1;
+	end
+	
 	if(char_X>=map_r_lim) begin
 	   //char_X<=char_X;
 	end
 	else if(mov[0]==1'b1&& forward) begin
 		char_X<=char_X+10'd1; //char_Y<=char_Y;
+		last_mov[0]<=1'b1;
+		last_mov[1]<=1'b0;
+	end
+	else if(forward==1'b0 && last_forward==1'b1) begin
+		char_X<=char_X-10'd1;
 	end
 end
 
@@ -88,105 +100,53 @@ end
 always@(posedge clk_2hz) begin
     case (state)
 		IDLE: begin
-			char_Y<=char_Y;
+			if(last_downward==1'b1 && downward==1'b0) char_Y<=char_Y-10'd1;
+			else if(last_upward==1'b1 && upward==1'b0) char_Y<=char_Y+10'd1;
+			else char_Y<=char_Y;
+			//char_Y<=char_Y;
 		end
 	
         FALLING: begin
             char_Y<=char_Y+10'b1;
+			last_mov[2]<=1'b1;
+			last_mov[3]<=1'b0;
         end
 		
 		JUMPING: begin
 			char_Y<=char_Y-10'b1;
+			last_mov[3]<=1'b1;
+			last_mov[2]<=1'b0;
 		end
 
     endcase
 end
 
 //blocking
-parameter REST = 3'd0, U = 3'd1, D = 3'd2, L = 3'd3, R = 3'd4;
-//wire block; //the information of current location
-reg [2:0] state_check_blocking=3'd0;
-reg [9:0] check_X;
-reg [9:0] check_Y;
-
  
 	blk_mem_gen_2 blocking_ram (
         .clka(sys_clk),
         
-        .addra({check_Y[4:0], check_X[4:0]}), 
+        .addra({10'b0, char_X}+{10'b0, char_Y}*19'd960),  //char_X, char_Y will work
         .douta(block)
     );
 
-always@(posedge clk_2hz) begin //next state logic //debug, might have timing problem
-    case (state_check_blocking)
-		REST: begin
-			//if(next_mov==1'b1) begin
-			//	next_mov<=1'b0;
-				state_check_blocking<=U;
-			//end
-			//else state_check_blocking<=IDLE;
-		end
-	
-		U: begin
-            state_check_blocking<=D;
-        end
-		
-		D: begin
-			state_check_blocking<=L;
-		end
-		
-		L: begin
-			state_check_blocking<=R;
-		end
-		
-		R: begin
-			state_check_blocking<=IDLE;
-		end
+always @(posedge clk_2hz) begin
+	last_upward=upward;
+	last_downward=downward;
+	last_backward=backward;
+	last_forward=forward;
+	if(block) begin //lock
+		if(last_mov[3]) upward=1'b0;
+		if(last_mov[2]) downward=1'b0;
+		if(last_mov[1]) backward=1'b0;
+		if(last_mov[0]) forward=1'b0;
+	end
+	else begin //"unlock"
+		if(last_mov[3]) downward=1'b1;
+		if(last_mov[2]) upward=1'b1;
+		if(last_mov[1]) forward=1'b1;
+		if(last_mov[0]) backward=1'b1;
+	end
+end	
 
-    endcase
-end
-
-always@(posedge clk_2hz) begin
-    case (state_check_blocking)
-		REST: begin
-			//do nothing
-		end
-        U: begin
-			if((char_Y-10'b1)>=map_u_lim) begin
-			    check_X<=char_X;
-				check_Y<=char_Y-10'b1;
-				if(block) upward<=1'b0;
-				else upward<=1'b1;
-			end
-        end
-		
-		D: begin
-			if((char_Y+10'b1)<=map_d_lim) begin
-			    check_X<=char_X;
-				check_Y<=char_Y+10'b1;
-				if(block) downward<=1'b0;
-				else downward<=1'b1;
-			end
-		end
-		
-		L: begin
-			if((char_X-10'b1)>=map_l_lim) begin
-				check_X<=char_X-10'b1;
-				check_Y<=char_Y;
-				if(~block) backward<=1'b0; //debug
-				else backward<=1'b1;
-			end
-		end
-		
-		R: begin
-			if((char_X+10'b1)<=map_r_lim) begin
-				check_X<=char_X+10'b1;
-				check_Y<=char_Y;
-				if(~block) forward<=1'b0; //debug
-				else forward<=1'b1; 
-			end
-		end
-
-    endcase
-end
 endmodule
