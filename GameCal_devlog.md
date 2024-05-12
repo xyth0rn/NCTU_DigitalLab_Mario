@@ -78,8 +78,20 @@ read the memory of four direction every time and update the "mobility status" of
 [Opt 31-67] Problem: A LUT5 cell in the design is missing a connection on input pin I1, which is used by the LUT equation. This pin has either been left unconnected in the design or the connection was removed due to the trimming of unused logic. The LUT cell name is: c1/vram_map/U0/inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[67].ram.r/prim_init.ram/DEVICE_7SERIES.NO_BMM_INFO.SP.SIMPLE_PRIM36.ram_i_2__1.
 ```
 
-2024/05/09 08:36PM
-to do: reset, precise coordinate?, blocking still weird(why the input from rom is always 1?)
+**2024/05/09 08:36PM**
 
-2024/05/10
-"如果走了這一步被卡住就不能走更深"
+to do: reset, precise coordinate, blocking still acting weird(why the input from rom is always 1?)
+
+**Yander 2024/05/12 10:01PM**
+
+blocking succeed, based on the thought: "record the last movement, once encounter block, cannot go further"
+
+problems 
+
+1st edition: multi-driven & weird input from ROM. (based on the thought "scanning the up/down/left/right block")
+
+2nd edition: "embedded in" floor. (based on the thought: "record the last movement, once encounter block, cannot go further")
+
+3rd edition: record the last-blocking status to help us "bounce back" to avoid the problem I faced in 2nd edition.
+
+to do: reset, precise coordinate?
