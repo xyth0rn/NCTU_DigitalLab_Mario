@@ -276,8 +276,8 @@ always@(*)
                rest = 0;
                eight = 0;
              end
-      10'd47: begin  //eighth D5
-               counter = 18'd85178;
+      10'd47: begin  //eighth F5
+               counter = 18'd71633;
                rest = 0;
                eight = 1;
              end
