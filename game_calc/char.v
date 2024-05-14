@@ -7,21 +7,22 @@ module char(
 	output block
 );
 
-parameter map_r_lim=10'd960, map_l_lim=10'd0, map_u_lim=10'd0, map_d_lim=10'd400;
+parameter map_r_lim=10'd960, map_l_lim=10'd0, map_u_lim=10'd0, map_d_lim=10'd500;
 
-//reg [9:0] blk_map_X=10'd0;
-//reg [9:0] blk_map_Y=10'd0;
+reg [9:0] last_X;
+reg [9:0] last_Y;
+
 reg [29:0] counter=30'd0;
 reg clk_2hz=1'd0;
 
-reg forward=1'b1, backward=1'b1, upward=1'b1, downward=1'b1;
+reg forward=1'b1, backward=1'b1, upward=1'b1, downward=1'b0;
 reg last_forward=1'b1, last_backward=1'b1, last_upward=1'b1, last_downward=1'b1;
 
-reg [3:0] last_mov=4'd0; //record the last movement
+//reg [3:0] last_mov=4'd0; //record the last movement
 
 initial begin 
 	char_X=10'd244;
-	char_Y=10'd400;
+	char_Y=10'd350;
 end
 
 always @(posedge sys_clk) begin
@@ -41,25 +42,37 @@ always @(posedge clk_2hz) begin
         //char_X<=char_X; //cannot move anymore
     end
 	else if(mov[1]==1'b1 && backward) begin
-		char_X<=char_X-10'd1; //char_Y<=char_Y;
-		last_mov[1]<=1'b1;
-		last_mov[0]<=1'b0;
+		if(block) begin
+			char_X<=last_X;
+		end
+		else begin
+			last_X<=char_X; //record previous X
+			char_X<=char_X-10'd1; 
+		end
+		//last_mov[1]<=1'b1;
+		//last_mov[0]<=1'b0;
 	end
-	else if(backward==1'b0 && last_backward==1'b1) begin
-		char_X<=char_X+10'd1;
-	end
+	/*else begin
+		last_mov[1]<=1'b0;
+	end*/
 	
 	if(char_X>=map_r_lim) begin
 	   //char_X<=char_X;
 	end
 	else if(mov[0]==1'b1&& forward) begin
-		char_X<=char_X+10'd1; //char_Y<=char_Y;
-		last_mov[0]<=1'b1;
-		last_mov[1]<=1'b0;
+		if(block) begin
+			char_X<=last_X;
+		end
+		else begin
+			last_X<=char_X; //record previous X
+			char_X<=char_X+10'd1; 
+		end
+		//last_mov[0]<=1'b1;
+		//last_mov[1]<=1'b0;
 	end
-	else if(forward==1'b0 && last_forward==1'b1) begin
-		char_X<=char_X-10'd1;
-	end
+	/*else begin
+		last_mov[0]<=1'b0;
+	end*/
 end
 
 //jump/fall
@@ -70,7 +83,8 @@ reg [9:0] counter_jump=10'd0;
 always@(posedge clk_2hz) begin //next state logic
     case (state)
 		IDLE: begin
-			if(downward && char_Y<=map_d_lim) state<=FALLING;
+			if(block) state<=IDLE;
+			else if(downward && char_Y<=map_d_lim) state<=FALLING;
 			
 			if(mov[3]==1'b1 && upward) begin
 				//counter_jump<=4'd0;
@@ -80,7 +94,8 @@ always@(posedge clk_2hz) begin //next state logic
 		end
 	
 		FALLING: begin
-            if(downward && char_Y<=map_d_lim) state<=FALLING;
+			if(block) state<=IDLE;
+            else if(downward && char_Y<=map_d_lim) state<=FALLING;
 			else state<=IDLE;
         end
 		
@@ -100,22 +115,38 @@ end
 always@(posedge clk_2hz) begin
     case (state)
 		IDLE: begin
-			if(last_downward==1'b1 && downward==1'b0) char_Y<=char_Y-10'd1;
-			else if(last_upward==1'b1 && upward==1'b0) char_Y<=char_Y+10'd1;
-			else char_Y<=char_Y;
-			//char_Y<=char_Y;
+			//last_mov[2]<=1'b0;
+			//last_mov[3]<=1'b0;
+			//if(last_downward==1'b1 && downward==1'b0) char_Y<=char_Y-10'd1;
+			//else if(last_upward==1'b1 && upward==1'b0) char_Y<=char_Y+10'd1;
+			//else char_Y<=char_Y;
+			char_Y<=char_Y;
 		end
 	
         FALLING: begin
-            char_Y<=char_Y+10'b1;
-			last_mov[2]<=1'b1;
-			last_mov[3]<=1'b0;
+			if(block) begin
+				char_Y<=last_Y;
+				downward<=1'b0;
+			end
+			else begin
+				last_Y<=char_Y;
+				char_Y<=char_Y+10'b1;
+			end
+			//last_mov[2]<=1'b1;
+			//last_mov[3]<=1'b0;
         end
 		
 		JUMPING: begin
-			char_Y<=char_Y-10'b1;
-			last_mov[3]<=1'b1;
-			last_mov[2]<=1'b0;
+			if(block) begin
+				char_Y<=last_Y;
+			end
+			else begin
+				downward<=1'b1;
+				last_Y<=char_Y;
+				char_Y<=char_Y-10'b1;
+			end
+			//last_mov[3]<=1'b1;
+			//last_mov[2]<=1'b0;
 		end
 
     endcase
@@ -126,27 +157,31 @@ end
 	blk_mem_gen_2 blocking_ram (
         .clka(sys_clk),
         
-        .addra({10'b0, char_X}+{10'b0, char_Y}*19'd960),  //char_X, char_Y will work
+        .addra({10'b0, char_X}+{10'b0, char_Y}*20'd960),  //char_X, char_Y will work 
         .douta(block)
     );
 
-always @(posedge clk_2hz) begin
-	last_upward=upward;
+//always @(posedge clk_2hz) begin
+	/*last_upward=upward;
 	last_downward=downward;
 	last_backward=backward;
-	last_forward=forward;
-	if(block) begin //lock
+	last_forward=forward;*/
+	/*if(block) begin //lock
 		if(last_mov[3]) upward=1'b0;
-		if(last_mov[2]) downward=1'b0;
-		if(last_mov[1]) backward=1'b0;
-		if(last_mov[0]) forward=1'b0;
+		else if(last_mov[2]) downward=1'b0;
+		else if(last_mov[1]) backward=1'b0;
+		else if(last_mov[0]) forward=1'b0; //priority
 	end
-	else begin //"unlock"
-		if(last_mov[3]) downward=1'b1;
+	else begin //"unlock"*/
+		/*if(last_mov[3]) downward=1'b1;
 		if(last_mov[2]) upward=1'b1;
 		if(last_mov[1]) forward=1'b1;
-		if(last_mov[0]) backward=1'b1;
+		if(last_mov[0]) backward=1'b1;*/
+		/*downward=1'b1;
+		upward=1'b1;
+		forward=1'b1;
+		backward=1'b1; //need to implement a anti-lockdown system
 	end
-end	
+end	*/
 
 endmodule
