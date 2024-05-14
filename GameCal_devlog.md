@@ -84,7 +84,7 @@ to do: reset, precise coordinate, blocking still acting weird(why the input from
 
 **Yander 2024/05/12 10:01PM**
 
-blocking succeed, based on the thought: "record the last movement, once encounter block, cannot go further"
+part of blocking succeed, based on the thought: "record the last movement, once encounter block, cannot go further"
 
 problems 
 
@@ -92,6 +92,15 @@ problems
 
 2nd edition: "embedded in" floor. (based on the thought: "record the last movement, once encounter block, cannot go further")
 
-3rd edition: record the last-blocking status to help us "bounce back" to avoid the problem I faced in 2nd edition.
+3rd edition: record the last-blocking status to help us "bounce back" to avoid the problem I faced in 2nd edition. but if the gravity module exists, mario will be "stuck in floor".
 
-to do: reset, precise coordinate, the overall gameCalc devLog
+to do: reset, precise coordinate, the overall gameCalc devLog, fixed the gravity module(w/ blocking)
+
+**Yander 2024/05/14 11:23PM**
+
+alter the blocking to "record the last coordinate".
+
+still need to figure out the proper way to deal with gravity module
+
+need to fix the deviation of coordinate. 
+
