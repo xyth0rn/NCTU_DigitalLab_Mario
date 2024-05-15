@@ -3,19 +3,24 @@
 module VGA_SPR_VRAM(
     CLK100M,    // 100mhz system clock
     RST_N,      // reset button
+    mov,
     VGA_RGB,    // VGA RGB output
     VGA_HS,     // VGA horizontal sync
-    VGA_VS      // VGA vertical sync
+    VGA_VS,      // VGA vertical sync
+    block
     );
 
     // inputs
     input CLK100M;
     input RST_N;
+    input [3:0] mov;
 
     // outputs
     output [11:0] VGA_RGB;
     output        VGA_HS;
     output        VGA_VS;
+    
+    output block;
     
     // local registers
     reg [8:0] spr_xy;
@@ -30,6 +35,10 @@ module VGA_SPR_VRAM(
     wire        vga_block;  // flag to check if is within screen boundary
     wire        vga_end;    // output a pulse signal when finish printing screen
     wire [8:0]  vga_dat;    // 9-bit RGB color data (3-bit R + 3-bit G + 3-bit B)
+    
+    wire [9:0] char_X;
+	wire [9:0] char_Y;
+	wire [9:0] bg_pos;
     
 
     clk_wiz_0 vga_pll(
@@ -49,6 +58,25 @@ module VGA_SPR_VRAM(
         .doutb(),
         .web(1'b0)
     );
+    
+    //character
+	char c1(
+		.sys_clk(clk_25mhz), 
+		.mov(mov), //from keypad //u d l r
+		
+		.char_X(char_X),
+		.char_Y(char_Y),
+		.block(block)
+    );
+	
+	//scrolling
+	scroll sc(
+		.sys_clk(clk_25mhz), //vga_end
+		.char_X(char_X),
+		.char_Y(char_Y),
+		
+		.bg_pos(bg_pos)
+	);
 
     VGA_CTRL VGA_CTRL(
         .clk_25mhz(clk_25mhz),
@@ -59,6 +87,7 @@ module VGA_SPR_VRAM(
         .pixel_y(pixel_y),
         .vga_block(vga_block),
         .vga_end(vga_end),
+        .bg_pos(bg_pos),
         
         .VGA_HS(VGA_HS),
         .VGA_VS(VGA_VS)
@@ -67,28 +96,29 @@ module VGA_SPR_VRAM(
     SPR_CTRL SPR_CTRL(
         .clk_25mhz(clk_25mhz),
         .RST_N(RST_N),
+        .bg_pos(bg_pos),
         
-        .pixel_x(pixel_x),
-        .pixel_y(pixel_y),
+        .pixel_x(pixel_x+10'd12), //the relative position of the character
+        .pixel_y(pixel_y+10'd20),
         .vga_block(vga_block),
         .vram_dat(vram_dat),
         .spr_en(1'b1),
-        .spr_x({2'b00, spr_xy[8:1]}),
-        .spr_y({2'b00, spr_xy[8:1]}),
+        .spr_x(char_X-bg_pos), 
+        .spr_y(char_Y),
         
         .vga_dat(vga_dat)
     );
 
     assign VGA_RGB = {vga_dat[8:6], 1'b0, vga_dat[5:3], 1'b0, vga_dat[2:0], 1'b0};
     
-    always@(posedge clk_25mhz or negedge RST_N) begin
+    /*always@(posedge clk_25mhz or negedge RST_N) begin
         if(!RST_N)
            spr_xy <= 9'b000000000;
         else if (vga_end)
            spr_xy <= spr_xy + 9'b000000001;
         else
            spr_xy <= spr_xy;
-    end
+    end*/
 endmodule
 
 
@@ -97,6 +127,7 @@ module VGA_CTRL(
     // input
     clk_25mhz,  // input clock 25mhz
     RST_N,      // reset
+	bg_pos, 		// bg right limit
 
     // output
     vram_adr,   // vram address
@@ -107,12 +138,13 @@ module VGA_CTRL(
     
     // IO output (is register due to wire assignment flashing issues)
     VGA_HS,     // VGA horizontal sync
-    VGA_VS      // VGA　vertical sync  
+    VGA_VS      // VGA??vertical sync  
     );
     
     // inputs
     input  clk_25mhz;
     input  RST_N;
+    input  [9:0] bg_pos;
 
     // outputs
     output [18:0] vram_adr; // VRAM address
@@ -143,7 +175,8 @@ module VGA_CTRL(
                 vdat_begin = 10'd34,   // Tpw + Tbp
                 vdat_end   = 10'd514,  // Tpw + Tbp + Tdisp
                 vline_end  = 10'd524;  // Ts
-
+	
+	parameter	WIDTH = 10'd960;
 
     assign pixel_x = vga_block? (hcount_r-hdat_begin) : 10'd0;
     assign pixel_y = vga_block? (vcount_r-vdat_begin) : 10'd0;
@@ -154,9 +187,9 @@ module VGA_CTRL(
         if (!RST_N)
             vram_adr <= 10'd0;
         else if(vga_end)
-            vram_adr <= 10'd0;
+            vram_adr <= bg_pos;
         else if(vga_block)
-            vram_adr <= vram_adr + 10'd1;
+            vram_adr <= bg_pos+pixel_x+pixel_y*WIDTH;
         else
             vram_adr <= vram_adr;
     end
@@ -233,6 +266,8 @@ module SPR_CTRL(
     spr_x,      // sprite position x relative to screen
     spr_y,      // sprite position y relative to screen
     
+    bg_pos,
+    
     // output
     vga_dat     // 9-bit RGB color data (3-bit R + 3-bit G + 3-bit B)
     );
@@ -247,6 +282,7 @@ module SPR_CTRL(
     input       spr_en;     // flag for sprite enable
     input [9:0] spr_x;      // sprite position x relative to screen
     input [9:0] spr_y;      // sprite position y relative to screen
+    input  [9:0] bg_pos;
     
     // outputs
     output [8:0] vga_dat;   // 9-bit RGB color data (3-bit R + 3-bit G + 3-bit B)
@@ -284,7 +320,7 @@ module SPR_CTRL(
     assign spram_adry = (spr_block)? (pixel_y - spr_y): 20'd0;
     // --
 
-    assign spram_adr[4:0] = spram_adrx[4:0];    // fetch sprite x address in RAM
+    assign spram_adr[4:0] = spram_adrx[4:0];    // fetch sprite x address in RAM 
     assign spram_adr[9:5] = spram_adry[4:0];    // fetch sprite y address in RAM
     
 
