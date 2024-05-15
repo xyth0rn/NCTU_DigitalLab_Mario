@@ -98,12 +98,12 @@ module VGA_SPR_VRAM(
         .RST_N(RST_N),
         .bg_pos(bg_pos),
         
-        .pixel_x(pixel_x), //the relative position of the character
-        .pixel_y(pixel_y),
+        .pixel_x(pixel_x+10'd12), //the relative position of the character
+        .pixel_y(pixel_y+10'd20),
         .vga_block(vga_block),
         .vram_dat(vram_dat),
         .spr_en(1'b1),
-        .spr_x(char_X-bg_pos),
+        .spr_x(char_X-bg_pos), 
         .spr_y(char_Y),
         
         .vga_dat(vga_dat)
@@ -175,7 +175,8 @@ module VGA_CTRL(
                 vdat_begin = 10'd34,   // Tpw + Tbp
                 vdat_end   = 10'd514,  // Tpw + Tbp + Tdisp
                 vline_end  = 10'd524;  // Ts
-
+	
+	parameter	WIDTH = 10'd960;
 
     assign pixel_x = vga_block? (hcount_r-hdat_begin) : 10'd0;
     assign pixel_y = vga_block? (vcount_r-vdat_begin) : 10'd0;
@@ -188,7 +189,7 @@ module VGA_CTRL(
         else if(vga_end)
             vram_adr <= bg_pos;
         else if(vga_block)
-            vram_adr <= vram_adr + 10'd1;
+            vram_adr <= bg_pos+pixel_x+pixel_y*WIDTH;
         else
             vram_adr <= vram_adr;
     end
@@ -319,7 +320,7 @@ module SPR_CTRL(
     assign spram_adry = (spr_block)? (pixel_y - spr_y): 20'd0;
     // --
 
-    assign spram_adr[4:0] = spram_adrx[4:0];    // fetch sprite x address in RAM
+    assign spram_adr[4:0] = spram_adrx[4:0];    // fetch sprite x address in RAM 
     assign spram_adr[9:5] = spram_adry[4:0];    // fetch sprite y address in RAM
     
 
