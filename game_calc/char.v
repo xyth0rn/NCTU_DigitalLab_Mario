@@ -9,8 +9,8 @@ module char(
 
 parameter map_r_lim=10'd960, map_l_lim=10'd0, map_u_lim=10'd0, map_d_lim=10'd500;
 
-reg [9:0] last_X;
-reg [9:0] last_Y;
+reg [9:0] last_X=10'd244;
+reg [9:0] last_Y=10'd350;
 
 reg [29:0] counter=30'd0;
 reg clk_2hz=1'd0;
@@ -18,7 +18,7 @@ reg clk_2hz=1'd0;
 reg forward=1'b1, backward=1'b1, upward=1'b1, downward=1'b0;
 reg last_forward=1'b1, last_backward=1'b1, last_upward=1'b1, last_downward=1'b1;
 
-//reg [3:0] last_mov=4'd0; //record the last movement
+//reg [1:0] last_mov=2'd0; //record the last movement of backward and forward
 
 initial begin 
 	char_X=10'd244;
@@ -53,7 +53,10 @@ always @(posedge clk_2hz) begin
 		//last_mov[0]<=1'b0;
 	end
 	/*else begin
-		last_mov[1]<=1'b0;
+		//last_mov[1]<=1'b0;
+		if(block) begin
+			char_X<=last_X;
+		end
 	end*/
 	
 	if(char_X>=map_r_lim) begin
@@ -71,13 +74,16 @@ always @(posedge clk_2hz) begin
 		//last_mov[1]<=1'b0;
 	end
 	/*else begin
-		last_mov[0]<=1'b0;
+		//last_mov[0]<=1'b0;
+		if(block) begin
+			char_X<=last_X;
+		end
 	end*/
 end
 
 //jump/fall
 parameter IDLE = 2'b00, FALLING = 2'b01, JUMPING = 2'b10;
-reg [1:0] state=2'd0;
+reg [1:0] state=FALLING;
 reg [9:0] counter_jump=10'd0;
 
 always@(posedge clk_2hz) begin //next state logic
@@ -121,6 +127,9 @@ always@(posedge clk_2hz) begin
 			//else if(last_upward==1'b1 && upward==1'b0) char_Y<=char_Y+10'd1;
 			//else char_Y<=char_Y;
 			char_Y<=char_Y;
+			
+			if(char_X!=last_X) downward<=1'b1;
+			//if(block & (last_mov[0] | last_mov[1])) downward<=1'b1;
 		end
 	
         FALLING: begin
