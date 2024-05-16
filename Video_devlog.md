@@ -44,14 +44,28 @@ Write the 9-bit value of each pixel into an output COE file.
 - Type in the filename of the PNG file
 - Receive COE file under the same directory named `<in_filename>_9bit.coe`
 
+Background image raw file:
+![v2_bg](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/4b71ffa9-783f-48ba-a754-6deffb172c82) <br>
 
-### Color Scheme
+Output result:
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/458c8b92-e288-4775-a4b3-febd3ad78248) <br>
+
+_Notice how the colors significantly differs from the original PNG file. This is because only the 3 most significant bits of R, G, and B (originally 8-bits each) are concatenated. This brutal solution causes an obvious color distortion._
+
+
+### Color Scheme Fix
+The simple PNG-to-9bit-COE solution previously presented has a serious distortion in color convertion. Therefore a linear transformation method is introduced here to reserve the color scheme of the original image to the maximum extend. The idea is to have the RGB values between 8-bit (0 ~ 255) be linearly mapped to 3-bit (0 ~ 7). Thus the equation: $y = \frac{7x}{255}$, where x is the original 8-bit value and y is the corresponding 3-bit value.
+
+Output result:
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/6bd2daaf-2bcd-4ee5-95f2-df9225400c7b) <br>
 
 #### Reference
 - https://stackoverflow.com/questions/12807669/how-to-convert-an-rgb-color-to-the-closest-matching-8-bit-color?fbclid=IwZXh0bgNhZW0CMTAAAR2quU1vXapxB_7i4PH6pAtKHepgDO9oD6pAL2jqr80RxePaxBntHD00WGc_aem_ATH-CjI_HFjCCoazRLQmv4BbaiWMK8Nxit4m6MyYDwNAJm2gAfIcPWPK-v-Pvxw9WEGhIZ2T_s7TtT72Q-HeeF6N <br>
 - https://stackoverflow.com/questions/138250/how-to-read-the-rgb-value-of-a-given-pixel-in-python <br>
 - https://www.browserstack.com/guide/how-to-use-css-rgba <br>
 - https://stackoverflow.com/questions/5676646/how-can-i-fill-out-a-python-string-with-spaces <br>
+- https://www.codeproject.com/Questions/1077234/How-to-convert-a-bit-rgb-to-bit-rgb <br>
+
 
 ## VGA from ROM
 Create a VGA driver prototype that is able to print a image (saved in ROM) onto the screen.
@@ -86,6 +100,7 @@ A VRAM is a *video buffer* that saves the rendered image ready to be shown on-sc
 This means that the `VRAM_ctrl` module should compare the positions and transparency of sprites to the background and
 determine either the color of the sprite or the background should be saved to the VRAM at each pixel. <br>
 
+- Reads `bg_pos` from `scrolling` module as the starting x position of the frame to scroll through the map as the character moves.
 - 100MHz to 25MHz using Xilinx IP Clocking Wizard
   - _Don't use homemade counter-based frequency divider or may cause severe clock jittering_
   - change `CLK_IN1` board interface from `custom` to `sys clock `
