@@ -54,7 +54,8 @@ _Notice how the colors significantly differs from the original PNG file. This is
 
 
 ### Color Scheme Fix
-The simple PNG-to-9bit-COE solution previously presented has a serious distortion in color convertion. Therefore a linear transformation method is introduced here to reserve the color scheme of the original image to the maximum extend. The idea is to have the RGB values between 8-bit (0 ~ 255) be linearly mapped to 3-bit (0 ~ 7). Thus the equation: $y = \frac{7x}{255}$, where x is the original 8-bit value and y is the corresponding 3-bit value.
+The simple PNG-to-9bit-COE solution previously presented has a serious distortion in color convertion. Therefore a linear transformation method is introduced here to preserve the color scheme of the original image to the maximum extend. The idea is to have the RGB values between 8-bit (0 ~ 255) be linearly mapped to 3-bit (0 ~ 7). Thus the equation: $y = \frac{7x}{255}$, where x is the original 8-bit value and y is the corresponding 3-bit value. <br>
+Although this convertion method still cannot convert the color scheme completely due to the limited color palette of 9-bit RGB, it did create a much better portrayl of the original image.
 
 Output result:
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/6bd2daaf-2bcd-4ee5-95f2-df9225400c7b) <br>
