@@ -19,7 +19,21 @@ Scroll screen as the character moves on the screen to prevent character from lea
 
 - Keep character within the center 1/3 area of the screen
 - Update frame coordinates on full map (60hz) depending on character x position
+- Implement `bg_pos` into VGA_CTRL
+  - Method 1: Direct vram address calculation via coordinate multiplication 
+    - `vram_adr <= bg_pos + pixel_x + pixel_y * 19'd960` (at clock speed of 25mhz)
+    > Interesting observation note:
+    > It is known that the calculation of multiplication take more than one clock cycle to due its complexity.
+    > Thus originally this method was expected to malfunction and was only tested out of pure curiosity when debugging.
+    > However, it is observed that this method was able to achieve the same result as Method 2.
+    > After discussing with the teaching assistant, the speculated explaination of this phenomenom is that:
+    > 1. All main functions are run and 25mhz while the system clock is 100mhz, overclocking creates a range of "buffer clock cycles" so that even though it takes multiple 100mhz clock cycles to perform multiplication, it still remains under 1 25mhz clock cycle.
+    > 2. When implementing multiplication, Xilinx Vivado sacrifices circuit area of multiplication for efficiency to accelerate the number of clock cycles required
+      
+  - Method 2: Add 320 at every end-of-line (This method was chosen)
+    - `if(hcount_r == hdat_end && vcount_r >= vdat_begin && vcount_r < vdat_end)   vram_adr <= vram_adr + 18'd320;`
 
+      
 ## Blocking Map
 Create a RAM to record where the character are not allowed to enter.
 0 = character can walk through; 1 = character cannot walk through.
