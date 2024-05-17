@@ -115,6 +115,8 @@ determine either the color of the sprite or the background should be saved to th
     > True Dual Port RAM: allows simultaneous read and write (4 data buses) <br>
     > Simple Dual Port RAM: can only read or write at the moment (2 data buses)
   - Enable Port Type = `always enabled`
+  - Port A width = `9`  (∵ 3-bit per color)
+  - Port A depth = `460800` (∵ 960 x 480 pixels)
   - Load init file = `.coe file location`
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 
@@ -128,6 +130,8 @@ Overlays movable sprites on top of VRAM.
   - interface type = `Native` 
   - memory type = `Single Port RAM`
   - Enable Port Type = `always enabled`
+  - Port A width = `9`  (∵ 3-bit per color)
+  - Port A depth = m * n (∵ m * n pixels)
   - Load init file = `.coe file location`
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 - Compares sprite with vram to decide which color data to print onto screen
