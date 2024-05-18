@@ -340,7 +340,7 @@ module SPR_CTRL(
                         && spr_en;
 
 
-    // -- for debug: move sprite from (0,0) to (20,20) and repeat
+    // -- calculate the address to read from sprite ram
     assign spram_adrx = (spr_block)? (pixel_x - spr_x): 20'd0;
     assign spram_adry = (spr_block)? (pixel_y - spr_y): 20'd0;
     // --
