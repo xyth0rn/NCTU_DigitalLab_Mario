@@ -105,4 +105,7 @@ still need to figure out the proper way to deal with gravity module
 need to fix the deviation of coordinate. 
 
 **Yander 2024/05/15 10:03PM**
-...
+
+gravity module succeed
+
+need to fix: 1. why mario will stuck in some particular point? 2. the "stick in the wall" bug
