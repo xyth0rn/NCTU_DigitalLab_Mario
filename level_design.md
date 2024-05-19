@@ -30,6 +30,23 @@ https://www.iloveimg.com/crop-image/crop-png
 see Video DevLog and Game Calculation Devlog
 # Map
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/588778e2-956c-4386-8a16-3873c600c468)
+take all 6 stars, then you win.
+## objects
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/89b5ca5b-0ddf-475b-ab1f-62b4db314ab8)
 
+## stage 1
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/6aa0d030-2828-4624-9b6e-e9202a780df0)
 
+- Door A & Door B: Teleport to Goomba room
+- Door C: teleport to Door D
+- Door E: teleport to stage 2
+- Pipe F: Teleport to (flying_mashroom)? G : Goomba room
+
+## stage 2
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/8473465a-1647-4689-a586-22210618c393)
+
+- Pipe A & Pipe C: teleport to Goomba room
+- Pipe B: teleport to D
+- Pipe E & Pipe F: teleport to Goomba room
+- Pipe G: teleport to H
 
