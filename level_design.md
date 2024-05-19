@@ -28,6 +28,8 @@ https://www.iloveimg.com/crop-image/crop-png
 
 ### Convert from PNG to COE
 see Video DevLog and Game Calculation Devlog
+# Map
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/588778e2-956c-4386-8a16-3873c600c468)
 
 
 
