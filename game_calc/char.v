@@ -13,7 +13,7 @@ module char(
 	output reg [9:0] char_Y,
 	output block,
 	output reg dead=1'b0,
-	output reg flying_mushroom=1'b1,
+	output reg flying_mushroom=1'b0,
 	output reg fire_flower=1'b0,
 	output reg [3:0] star_cnt=4'd0
 );
