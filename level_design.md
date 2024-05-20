@@ -40,7 +40,7 @@ take all 6 stars, then you win.
 - Door A & Door B: Teleport to Goomba room
 - Door C: teleport to Door D
 - Door E: teleport to stage 2
-- Pipe F: Teleport to (flying_mashroom)? G : Goomba room
+- Pipe F: Teleport to (have flying_mashroom)? G : Goomba room
 
 ## stage 2
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/8473465a-1647-4689-a586-22210618c393)
