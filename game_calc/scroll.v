@@ -11,7 +11,7 @@ initial begin
 end
 
 always @(posedge sys_clk) begin
-	if(bg_pos<10'd480 && char_X>=bg_pos+10'd270) begin
+	if(bg_pos<10'd325 && char_X>=bg_pos+10'd270) begin
 		bg_pos<=bg_pos+10'd1;
 	end
 	if(bg_pos>10'd0 && char_X<=bg_pos+10'd90) begin
