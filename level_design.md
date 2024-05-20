@@ -30,7 +30,8 @@ https://www.iloveimg.com/crop-image/crop-png
 see Video DevLog and Game Calculation Devlog
 # Map
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/588778e2-956c-4386-8a16-3873c600c468)
-take all 6 stars, then you win.
+There's a poisonous star, which is next to the goomba.
+Take the rest of stars, then you win.
 ## objects
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/89b5ca5b-0ddf-475b-ab1f-62b4db314ab8)
 
