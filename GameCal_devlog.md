@@ -107,3 +107,7 @@ need to fix the deviation of coordinate.
 gravity module succeed
 
 need to fix: 1. why mario will stuck in some particular point? 2. the "stick in the wall" bug
+
+**Yander 2024/05/20 08:17PM**
+
+transmit function setting, set precise coordinate
