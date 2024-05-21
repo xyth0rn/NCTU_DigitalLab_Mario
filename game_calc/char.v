@@ -15,6 +15,7 @@ module char(
 	output reg dead=1'b0,
 	output reg flying_mushroom=1'b0,
 	output reg fire_flower=1'b0,
+	output reg poison_mushroom=1'b0,
 	output reg [3:0] star_cnt=4'd0
 );
 
@@ -46,21 +47,30 @@ reg transmit=1'b0;
 //interaction object
 //reg [3:0] star_cnt=4'd0;
 
-always @(posedge sys_clk) begin
-	if(death_in) star_cnt<=4'd0;
-	if(star_in) star_cnt<=star_cnt+4'b1;
+always @(posedge star_in || negedge RST_N) begin
+	star_cnt<=star_cnt+4'b1;
+	if(~RST_N) star_cnt<=4'b0;
 end
 
-always @(posedge sys_clk) begin
-	if(death_in) dead<=1'b1;
-	else dead<=1'b0;
-	
+always @(posedge flying_mushroom_in || negedge RST_N) begin
+	flying_mushroom<=1'b1;
+	if(~RST_N) flying_mushroom<=1'b0;
+end
+
+always @(posedge poison_mushroom_in || negedge RST_N) begin
+	poison_mushroom<=1'b1;
+	if(~RST_N) poison_mushroom<=1'b0;
+end
+
+always @(posedge fire_flower_in || negedge RST_N) begin
+	fire_flower<=1'b1;
+	if(~RST_N) fire_flower<=1'b0;
+end
+
+always @(posedge death_in || posedge poison_mushroom_in || negedge RST_N) begin
+	dead<=1'b1;
 	if(poison_mushroom_in & ~fire_flower) dead<=1'b1;
-end
-
-always @(posedge sys_clk) begin
-	if(death_in) flying_mushroom<=1'b0;
-	if(flying_mushroom_in) flying_mushroom<=1'b1;
+	if(~RST_N) dead<=1'b0;
 end
 
 
@@ -81,7 +91,7 @@ always @(posedge sys_clk) begin
 end
 
 
-always @(posedge clk_2hz) begin
+always @(posedge clk_2hz || negedge RST_N) begin
 	//transmit
 	if(~RST_N | dead)begin
 		char_X<=start_X;
@@ -229,7 +239,7 @@ always@(posedge clk_2hz) begin //next state logic
     endcase
 end
 
-always@(posedge clk_2hz) begin
+always@(posedge clk_2hz || negedge RST_N) begin
 	//reset and transmit
 	if(~RST_N | dead)begin
 		char_Y<=start_Y;
