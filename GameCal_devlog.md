@@ -111,3 +111,7 @@ need to fix: 1. why mario will stuck in some particular point? 2. the "stick in 
 **Yander 2024/05/20 08:17PM**
 
 transmit function development, set precise coordinate, interactive objects character part 
+
+**Yander 2024/05/21 08:51AM**
+
+fixed reset, some problems about the record of interactive system
