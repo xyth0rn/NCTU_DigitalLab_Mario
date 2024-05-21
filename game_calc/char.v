@@ -13,6 +13,7 @@ module char(
 	output reg [9:0] char_Y,
 	output block,
 	output reg dead=1'b0,
+	output reg win=1'b0,
 	output reg flying_mushroom=1'b0,
 	output reg fire_flower=1'b0,
 	output reg poison_mushroom=1'b0,
@@ -24,9 +25,9 @@ parameter start_X=10'd220, start_Y=10'd360;
 parameter F_X=10'd372, F_Y=10'd260;
 parameter goomba_room_X=10'd100, goomba_room_Y=10'd430;
 parameter G_X=10'd450, G_Y=10'd200;
-parameter door_A_X=10'd350, door_A_Y=10'd50, door_B_X=10'd55, door_B_Y=10'd20, door_C_X=10'd50, door_C_Y=10'd200;
-parameter door_D_X=10'd220, door_D_Y=10'd200, door_E_X=10'd30, door_E_Y=10'd350;
-parameter stage_two_X=10'd800, stage_two_Y=10'd10;
+parameter door_A_X=10'd350, door_A_Y=10'd50, door_B_X=10'd55, door_B_Y=10'd25, door_C_X=10'd50, door_C_Y=10'd205;
+parameter door_D_X=10'd150, door_D_Y=10'd200, door_E_X=10'd30, door_E_Y=10'd345;
+parameter stage_two_X=10'd600, stage_two_Y=10'd10;
 parameter pipe_A_X=10'd590, pipe_A_Y=10'd110, pipe_B_X=10'd590, pipe_B_Y=10'd250, pipe_C_X=10'd590, pipe_C_Y=10'd365;
 parameter pipe_D_X=10'd715, pipe_D_Y=10'd110, pipe_E_X=10'd750, pipe_E_Y=10'd110, pipe_F_X=10'd750, pipe_F_Y=10'd250;
 parameter pipe_G_X=10'd750, pipe_G_Y=10'd365, pipe_H_X=10'd900, pipe_H_Y=10'd125;
@@ -45,32 +46,33 @@ reg send_back_lr=1'b0;
 reg transmit=1'b0;
 
 //interaction object
-//reg [3:0] star_cnt=4'd0;
-
-always @(posedge star_in || negedge RST_N) begin
-	star_cnt<=star_cnt+4'b1;
-	if(~RST_N) star_cnt<=4'b0;
+always @(star_in) begin
+	if(star_in) begin
+		if(star_cnt+4'b1==4'd6) win<=1'b1;
+		else star_cnt<=star_cnt+4'b1;
+	end
+	//if(~RST_N) star_cnt<=4'b0;
 end
 
-always @(posedge flying_mushroom_in || negedge RST_N) begin
-	flying_mushroom<=1'b1;
-	if(~RST_N) flying_mushroom<=1'b0;
+always @(flying_mushroom_in) begin
+	if(flying_mushroom_in) flying_mushroom<=1'b1;
+	//if(~RST_N) flying_mushroom<=1'b0;
 end
 
-always @(posedge poison_mushroom_in || negedge RST_N) begin
-	poison_mushroom<=1'b1;
-	if(~RST_N) poison_mushroom<=1'b0;
+always @(poison_mushroom_in) begin
+	if(poison_mushroom_in) poison_mushroom<=1'b1;
+	//if(~RST_N) poison_mushroom<=1'b0;
 end
 
-always @(posedge fire_flower_in || negedge RST_N) begin
-	fire_flower<=1'b1;
-	if(~RST_N) fire_flower<=1'b0;
+always @(fire_flower_in) begin
+	if(fire_flower_in) fire_flower<=1'b1;
+	//if(~RST_N) fire_flower<=1'b0;
 end
 
-always @(posedge death_in || posedge poison_mushroom_in || negedge RST_N) begin
-	dead<=1'b1;
-	if(poison_mushroom_in & ~fire_flower) dead<=1'b1;
-	if(~RST_N) dead<=1'b0;
+always @(death_in or poison_mushroom_in) begin
+	if(death_in) dead<=1'b1;
+	if(poison_mushroom_in && !fire_flower) dead<=1'b1;
+	//if(~RST_N) dead<=1'b0;
 end
 
 
@@ -91,9 +93,9 @@ always @(posedge sys_clk) begin
 end
 
 
-always @(posedge clk_2hz || negedge RST_N) begin
+always @(posedge clk_2hz or negedge RST_N) begin
 	//transmit
-	if(~RST_N | dead)begin
+	if(!RST_N || dead)begin
 		char_X<=start_X;
 		transmit<=1'b1;
 	end
@@ -220,8 +222,8 @@ always@(posedge clk_2hz) begin //next state logic
 		end
 	
 		FALLING: begin
-			if(block & ~transmit) state<=IDLE;
-            else if(downward && char_Y<=map_d_lim) state<=FALLING;
+			if(block && ~transmit) state<=IDLE;
+            else if(downward && char_Y<=map_d_lim && ~transmit) state<=FALLING;
 			else state<=IDLE;
         end
 		
@@ -239,9 +241,9 @@ always@(posedge clk_2hz) begin //next state logic
     endcase
 end
 
-always@(posedge clk_2hz || negedge RST_N) begin
+always@(posedge clk_2hz or negedge RST_N) begin
 	//reset and transmit
-	if(~RST_N | dead)begin
+	if(!RST_N || dead)begin
 		char_Y<=start_Y;
 	end
 	else if(char_X==F_X && (char_Y>=F_Y && char_Y<F_Y+10'd24)) begin
@@ -282,15 +284,15 @@ always@(posedge clk_2hz || negedge RST_N) begin
 	else begin		
 		case (state)
 			IDLE: begin
-				if(block & ~transmit) char_Y<=last_Y;
+				if(block && ~transmit) char_Y<=last_Y;
 				else char_Y<=char_Y;
 				
-				if(char_X!=last_X) downward<=1'b1;
+				if(char_X!=last_X && ~transmit) downward<=1'b1;
 				else if(send_back_lr) downward<=1'b1;
 			end
 		
 			FALLING: begin
-				if(block & ~transmit) begin
+				if(block && ~transmit) begin
 					char_Y<=last_Y;
 					downward<=1'b0;
 				end
@@ -303,7 +305,7 @@ always@(posedge clk_2hz || negedge RST_N) begin
 			end
 			
 			JUMPING: begin
-				if(block & ~transmit) begin
+				if(block && ~transmit) begin
 					char_Y<=last_Y;
 				end
 				else begin
@@ -327,28 +329,5 @@ end
         .addra({10'b0, char_X}+{10'b0, char_Y}*20'd960),  //char_X, char_Y will work 
         .douta(block)
     );
-
-//always @(posedge clk_2hz) begin
-	/*last_upward=upward;
-	last_downward=downward;
-	last_backward=backward;
-	last_forward=forward;*/
-	/*if(block) begin //lock
-		if(last_mov[3]) upward=1'b0;
-		else if(last_mov[2]) downward=1'b0;
-		else if(last_mov[1]) backward=1'b0;
-		else if(last_mov[0]) forward=1'b0; //priority
-	end
-	else begin //"unlock"*/
-		/*if(last_mov[3]) downward=1'b1;
-		if(last_mov[2]) upward=1'b1;
-		if(last_mov[1]) forward=1'b1;
-		if(last_mov[0]) backward=1'b1;*/
-		/*downward=1'b1;
-		upward=1'b1;
-		forward=1'b1;
-		backward=1'b1; //need to implement a anti-lockdown system
-	end
-end	*/
 
 endmodule
