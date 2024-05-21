@@ -14,6 +14,8 @@ Use buttons on Nexys4 DDR to control character movement.
   - Realized through finite state machine
   - ////////////insert fsm state graph here////////////////
 
+## Transmit Mechanism
+
 ## Screen Scroll
 Scroll screen as the character moves on the screen to prevent character from leaving the screen, and to access extensive areas of the map.
 
