@@ -114,4 +114,8 @@ transmit function development, set precise coordinate, interactive objects chara
 
 **Yander 2024/05/21 08:51AM**
 
-fixed reset, some problems about the record of interactive system
+fixed some problems about the record of interactive system
+
+**Yander 2024/05/21 02:15PM**
+
+fixed the problem of "transmit to underground" by properly use a flag
