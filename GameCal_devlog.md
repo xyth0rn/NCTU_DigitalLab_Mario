@@ -124,3 +124,4 @@ video making:
 https://pixabay.com/sound-effects/search/trailer/
 trailermusic, SamuelFrancisJohnson
 BOOM Geomorphism Cinematic Trailer Sound Effects, SUBMORITY
+Bang, SoulProdMusic
