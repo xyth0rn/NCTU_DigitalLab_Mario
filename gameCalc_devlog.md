@@ -43,6 +43,7 @@ Use buttons on Nexys4 DDR to control character movement.
 ```
 
   - why I designed a "transmit" bit in our implementation?
+    
     - I encountered a problem: mario will be send back and forth repeatedly
     - but why?
     - it seems that
