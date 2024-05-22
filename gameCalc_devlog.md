@@ -31,6 +31,10 @@ Use buttons on Nexys4 DDR to control character movement.
 ```
  
 ## dealing with blocking 
+  - I have tried some different methods and thoughts during the development
+    1.
+    2.
+  - final method
 
 ## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
