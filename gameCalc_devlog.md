@@ -34,6 +34,9 @@ Use buttons on Nexys4 DDR to control character movement.
 
 ## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
+```
+parameter door_A_X=10'd350, door_A_Y=10'd50, door_B_X=10'd55, door_B_Y=10'd25, door_C_X=10'd50, door_C_Y=10'd205;
+```
   - using a "line" instead of a "point" to detect if mario triggered a portal
 ```
         else if((char_X>=door_A_X && char_X<door_A_X+10'd24) && char_Y==door_A_Y) begin //if mario is within the range, the transportation will take place
