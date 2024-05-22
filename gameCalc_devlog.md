@@ -15,10 +15,22 @@ Use buttons on Nexys4 DDR to control character movement.
   - state graph:
   ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/gravity%20system%20FSM.png)
   - there's some additional mechanisms to ensure the correctness of transmit and blocking, which will be explained later
-  - corresponding action of each state:
+  - corresponding action of each state (if no additional mechanisms were triggered):
       - IDLE: do nothing
-      - FALLING:
-      - JUMPING:
+      - FALLING: fall by one pixel each clock cycle, if it doesn't encounter any blocking object, it will keep falling because of the presence of gravity
+```
+			char_Y<=char_Y+10'b1;
+```
+      - JUMPING: rise by one pixel each clock cycle, the total height of one jump is controled by a counter
+```
+			if(counter_jump==10'd64) begin //control the height of each jump
+				counter_jump<=10'd0;
+				state<=FALLING; //if the jumping action is ended, it should fall due to gravity
+			end
+			else begin
+				counter_jump<=counter_jump+10'd1;
+			end
+```
  
 - dealing with blocking 
 
