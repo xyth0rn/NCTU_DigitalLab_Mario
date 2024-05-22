@@ -12,7 +12,7 @@ Use buttons on Nexys4 DDR to control character movement.
 - Gravity mechanism
   - Character will fall if there's no blocking object (ex. floor or bricks) below it
   - Realized through finite state machine
-  - ////////////insert fsm state graph here////////////////
+  ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/gravity%20system%20FSM.png)
 
 ## Transmit Mechanism
 
