@@ -25,13 +25,13 @@ Scroll screen as the character moves on the screen to prevent character from lea
 
 - Keep character within the center 1/3 area of the screen
 - Update frame coordinates on full map (60hz) depending on character's x position (get it from char.v)
-' if(bg_pos<10'd325 && char_X>=bg_pos+10'd270) begin
+``` if(bg_pos<10'd325 && char_X>=bg_pos+10'd270) begin
 		bg_pos<=bg_pos+10'd1;
 	end
 	if(bg_pos>10'd0 && char_X<=bg_pos+10'd90) begin
 		bg_pos<=bg_pos-10'd1;
 	end
-'
+```
 - Implement `bg_pos` into VGA_CTRL
   - Method 1: Direct vram address calculation via coordinate multiplication 
     - `vram_adr <= bg_pos + pixel_x + pixel_y * 19'd960` (at clock speed of 25mhz)
