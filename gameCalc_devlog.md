@@ -46,7 +46,22 @@ Use buttons on Nexys4 DDR to control character movement.
     
     - I encountered a problem: mario will be send back and forth repeatedly
     - but why?
-    - It seems that when mario was transported to the target, my gravity system will make it fall immediately. And when it first touch a blocking object (the ground), my blocking mechanism will send it back to "last location". But in this moment, the value of the register which store "the X coordinate of mario's last location" remains the coordinate of the portal, so the tragedy happens 
+    - It seems that when mario was transported to the target, my gravity system will make it fall immediately. And when it first touch a blocking object (the ground), my blocking mechanism will send it back to "last location". But in this moment, the value of the register which store "the X coordinate of mario's last location" remains the coordinate of the portal, so the tragedy happens
+    - solution:
+    - simply turn off the "send back" mechanism of my blocking system until some horizontal movements happen
+```
+	else if(mov[0]==1'b1&& forward) begin
+	        if(block & ~transmit) begin //after transmit, the "send back mechanism" will be turned off temporary
+		        char_X<=last_X;
+			send_back_lr<=1'b1;
+		end
+		else begin
+                        transmit<=1'b0; //turn on the "send back mechanism" again because there's some movement
+			last_X<=char_X;
+			char_X<=char_X+10'd1; 
+		end
+	end
+```
 
 ## Screen Scroll
 Scroll screen as the character moves on the screen to prevent character from leaving the screen, and to access extensive areas of the map.
