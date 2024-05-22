@@ -42,10 +42,10 @@ Use buttons on Nexys4 DDR to control character movement.
 	end
 ```
 
-  -why I designed a "transmit" bit in our implementation?
-    -I encountered a problem: mario will be send back and forth repeatedly
-    -but why?
-    -it seems that
+  - why I designed a "transmit" bit in our implementation?
+    - I encountered a problem: mario will be send back and forth repeatedly
+    - but why?
+    - it seems that
 
 ## Screen Scroll
 Scroll screen as the character moves on the screen to prevent character from leaving the screen, and to access extensive areas of the map.
