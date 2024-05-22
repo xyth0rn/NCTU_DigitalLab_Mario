@@ -15,6 +15,10 @@ Use buttons on Nexys4 DDR to control character movement.
   - state graph:
   ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/gravity%20system%20FSM.png)
   - there's some additional mechanisms to ensure the correctness of transmit and blocking, which will be explained later
+  - corresponding action of each state:
+      - IDLE: do nothing
+      - FALLING:
+      - JUMPING:
  
 - dealing with blocking 
 
@@ -24,7 +28,7 @@ Use buttons on Nexys4 DDR to control character movement.
 Scroll screen as the character moves on the screen to prevent character from leaving the screen, and to access extensive areas of the map.
 
 - Keep character within the center 1/3 area of the screen
-- Update frame coordinates on full map (60hz) depending on character's x position (get it from char.v)
+- Update frame coordinates (bg_pos) on full map (60hz) depending on character's x position (get it from char.v)
 ```
 	if(bg_pos<10'd325 && char_X>=bg_pos+10'd270) begin
 		bg_pos<=bg_pos+10'd1;
