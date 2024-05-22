@@ -31,6 +31,16 @@ Use buttons on Nexys4 DDR to control character movement.
 ```
  
 ## dealing with blocking 
+  - goal: unable mario to pass through some blocking objects (ground, wall...)
+  - read the "blocking map" from RAM, for each pixel, there's a bit indicates whether it's a legal location where mario can access (0 = character can walk through; 1 = character cannot walk through)
+```
+    blk_mem_gen_2 blocking_ram (
+        .clka(sys_clk),
+        
+        .addra({10'b0, char_X}+{10'b0, char_Y}*20'd960),  //the current location of mario
+        .douta(block)
+    );
+```
   - I have tried some different methods and thoughts during the development
 1.
 2.
