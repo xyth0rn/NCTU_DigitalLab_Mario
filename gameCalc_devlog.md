@@ -21,7 +21,9 @@ Use buttons on Nexys4 DDR to control character movement.
 ```
 			char_Y<=char_Y+10'b1;
 ```
+
       - JUMPING: rise by one pixel each clock cycle, the total height of one jump is controled by a counter
+      
 ```
 			if(counter_jump==10'd64) begin //control the height of each jump
 				counter_jump<=10'd0;
