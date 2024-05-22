@@ -9,7 +9,7 @@ Use buttons on Nexys4 DDR to control character movement.
   - Left = `P17`
   - Right = `M17`
 - Coordinates (upper-right corner of character) are *absolute coordinates* (stored in the format of x and y relative of the whole background)
-- Gravity mechanism
+## Gravity mechanism
   - Character will fall if there's no blocking object (ex. floor or bricks) below it
   - Realized through finite state machine
   - state graph:
@@ -30,9 +30,9 @@ Use buttons on Nexys4 DDR to control character movement.
 	end
 ```
  
-- dealing with blocking 
+## dealing with blocking 
 
-- transport mechanism
+## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
   - using a "line" instead of a "point" to detect if mario triggered a portal
 ```
