@@ -14,7 +14,7 @@ Use buttons on Nexys4 DDR to control character movement.
   - Realized through finite state machine
   - state graph:
   ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/gravity%20system%20FSM.png)
-  - there's some additional mechanisms to ensure the correctness of transmit and blocking, which will be explained later
+  - there's some additional mechanisms to ensure the correctness of transport and blocking, which will be explained later
   - corresponding action of each state (if no additional mechanisms were triggered):
       - IDLE: do nothing
       - FALLING: fall by one pixel each clock cycle, if it doesn't encounter any blocking object, it will keep falling because of the presence of gravity
@@ -32,7 +32,20 @@ Use buttons on Nexys4 DDR to control character movement.
  
 - dealing with blocking 
 
-- transmit mechanism
+- transport mechanism
+  - store all absolute coordinate of each portal (door and pipe) by parameters
+  - using a "line" instead of a "point" to detect if mario triggered a portal
+```
+        else if((char_X>=door_A_X && char_X<door_A_X+10'd24) && char_Y==door_A_Y) begin //if mario is within the range, the transportation will take place
+		transmit<=1'b1;
+		char_X<=goomba_room_X;
+	end
+```
+
+  -why I designed a "transmit" bit in our implementation?
+    -I encountered a problem: mario will be send back and forth repeatedly
+    -but why?
+    -it seems that
 
 ## Screen Scroll
 Scroll screen as the character moves on the screen to prevent character from leaving the screen, and to access extensive areas of the map.
@@ -62,7 +75,7 @@ Scroll screen as the character moves on the screen to prevent character from lea
     - `if(hcount_r == hdat_end && vcount_r >= vdat_begin && vcount_r < vdat_end)   vram_adr <= vram_adr + 18'd320;`
 
       
-## Blocking Map
+## Creating Blocking Map
 Create a RAM to record where the character are not allowed to enter.
 0 = character can walk through; 1 = character cannot walk through.
 - Landscape
