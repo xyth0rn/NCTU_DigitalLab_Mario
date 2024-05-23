@@ -26,4 +26,6 @@
 - G5(783Hz):  `63776`
 - A5(880Hz):  `56818`
 - B5(987Hz):  `50658`
-
+## pitch generator
+- There're three inputs
+  - `rest`
