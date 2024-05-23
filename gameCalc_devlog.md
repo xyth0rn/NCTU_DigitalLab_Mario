@@ -69,7 +69,7 @@ reg [9:0] check_Y;
 	end
     end
 ```
-  - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
+    - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
   - 2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
@@ -101,7 +101,7 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
-  - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+    - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
  (示意圖)
 
 - final method
