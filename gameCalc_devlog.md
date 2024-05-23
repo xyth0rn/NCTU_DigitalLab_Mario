@@ -105,9 +105,13 @@ reg [9:0] check_Y;
  (示意圖)
 
 - final method
-  - to solve the problem of method 2, I decide a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
+  - to solve the problem of method 2, I decided to add a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
+```
+```
   - but there's a small problem: "if mario was sent back horizontally, the vertical movement's status will remain IDLE, so the gravity system is invalid, it will float on the air"
-  - to solve this problem, I design a bit call "send_back_lr" to record if there's some "horizontally send back" takes place. If there's some "horizontally send back", I will open the gravity system, i.e. change the FSM to FALLING state. 
+  - to solve this problem, I design a bit call "send_back_lr" to record if there's some "horizontally send back" takes place. If there's some "horizontally send back", I will open the gravity system, i.e. change the FSM to FALLING state.
+```
+```
   - result: succeed
     
 ## transport mechanism
