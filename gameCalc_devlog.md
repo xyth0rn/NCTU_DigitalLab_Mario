@@ -69,8 +69,7 @@ reg [9:0] check_Y;
 	end
     end
 ```
-
-    - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
+- result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
   - 2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
