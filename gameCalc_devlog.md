@@ -71,7 +71,7 @@ reg [9:0] check_Y;
 ```
   - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
-  2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adapted a method which is "record the last movement, once encounter block, cannot go further"
+  2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
 ```
         if(block) begin //"lock"
@@ -101,10 +101,15 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
-  4.
+  - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+ (示意圖)
 
 - final method
-
+  - to solve the problem of method 2, I decide a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
+  - but there's a small problem: "if mario was sent back horizontally, the vertical movement's status will remain IDLE, so the gravity system is invalid, it will float on the air"
+  - to solve this problem, I design a bit call "send_back_lr" to record if there's some "horizontally send back" takes place. If there's some "horizontally send back", I will open the gravity system, i.e. change the FSM to FALLING state. 
+  - result: succeed
+    
 ## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
 ```
