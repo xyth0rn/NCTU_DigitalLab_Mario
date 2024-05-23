@@ -43,7 +43,7 @@ Use buttons on Nexys4 DDR to control character movement.
     );
 ```
   - I have tried some different methods and thoughts during the development
- # 1. try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
+ ### 1. try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
   - I try to use FSM to transfer between check up/down/left/right pixel of current location
 ```
 parameter REST = 3'd0, U = 3'd1, D = 3'd2, L = 3'd3, R = 3'd4;
@@ -69,9 +69,9 @@ reg [9:0] check_Y;
 	end
     end
 ```
- # result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
+ ### result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
- # 2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
+ ### 2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
 ```
         if(block) begin //"lock"
@@ -101,10 +101,10 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
- # result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+ ### result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
  (示意圖)
 
-# final method
+### final method
   - to solve the problem of method 2, I decided to add a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
 ```
 ```
@@ -112,7 +112,7 @@ reg [9:0] check_Y;
   - to solve this problem, I design a bit call "send_back_lr" to record if there's some "horizontally send back" takes place. If there's some "horizontally send back", I will open the gravity system, i.e. change the FSM to FALLING state.
 ```
 ```
-# result: succeed
+### result: succeed
     
 ## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
