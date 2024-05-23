@@ -43,7 +43,7 @@ Use buttons on Nexys4 DDR to control character movement.
     );
 ```
   - I have tried some different methods and thoughts during the development
-- 1. try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
+  1. try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
   - I try to use FSM to transfer between check up/down/left/right pixel of current location
 ```
 parameter REST = 3'd0, U = 3'd1, D = 3'd2, L = 3'd3, R = 3'd4;
@@ -70,7 +70,10 @@ reg [9:0] check_Y;
     end
 ```
   - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
-- 2.
+    
+  2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adapted a method which is ""
+ 
+  3. 
 
 - final method
 
