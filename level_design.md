@@ -33,7 +33,8 @@ see Video DevLog and Game Calculation Devlog
 There's a poisonous star, which is next to the goomba.
 Take the rest of stars, then you win.
 ## objects
-![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/89b5ca5b-0ddf-475b-ab1f-62b4db314ab8)
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/94b1b6f9-88f4-45eb-8484-8c19d6a1017c)
+
 
 ## stage 1
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/6aa0d030-2828-4624-9b6e-e9202a780df0)
