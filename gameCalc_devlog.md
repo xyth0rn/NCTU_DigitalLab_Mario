@@ -109,12 +109,44 @@ reg [9:0] check_Y;
 ### final method
   - to solve the problem of method 2, I decided to add a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
 ```
+	//take move backward for example
+        if(char_X==map_l_lim) begin
+		char_X<=char_X; //cannot move anymore
+	end
+	else if(mov[1]==1'b1) begin
+		if(block & ~transmit) begin 
+			char_X<=last_X; //send back!!!
+			send_back_lr<=1'b1; //will be mentioned later
+		end
+		else begin
+			transmit<=1'b0;
+			last_X<=char_X; //record previous X
+			char_X<=char_X-10'd1; //move
+		end
+	end
 ```
   - but there's a small problem: "if mario was sent back horizontally, the vertical movement's status will remain IDLE, so the gravity system is invalid, it will float on the air"
   - to solve this problem, I design a bit call "send_back_lr" to record if there's some "horizontally send back" takes place. If there's some "horizontally send back", I will open the gravity system, i.e. change the FSM to FALLING state.
 ```
+        //in the segment of horizontally movement control
+        if(block) begin
+		send_back_lr<=1'b1;
+	end
+	else begin
+		send_back_lr<=1'b0;
+	end
 ```
-### result: succeed
+```
+        //in the segment of vertically movement control (FSM state logic)
+        IDLE: begin
+		if(block && ~transmit) char_Y<=last_Y;
+		else char_Y<=char_Y;
+				
+		if(char_X!=last_X && ~transmit) downward<=1'b1;
+		else if(send_back_lr) downward<=1'b1; //open the gravity system
+	end
+```
+ - result: succeed
     
 ## transport mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
