@@ -6,7 +6,7 @@
 - Screen Resolution: 640 x 480 pixels
 
 ## System Architecture
-![image](https://github.com/xyth0rn/NCTU_DigitalLab_PicoPark/assets/49625757/4d50980a-25b9-4fd3-a09b-60937b95c67d)
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/system%20architecture%20update.png)
 
 - Input Controls
   - 12-key Keypad
