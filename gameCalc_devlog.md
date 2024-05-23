@@ -9,6 +9,7 @@ Use buttons on Nexys4 DDR to control character movement.
   - Left = `P17`
   - Right = `M17`
 - Coordinates (upper-right corner of character) are *absolute coordinates* (stored in the format of x and y relative of the whole background)
+- the operation of X coordinate and Y coordinate is written seperately because there's a huge difference between moving vertically and horizontally due to the presence of gravity, also to avoid multi-driven problem
 ## Gravity mechanism
   - Character will fall if there's no blocking object (ex. floor or bricks) below it
   - Realized through finite state machine
