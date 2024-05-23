@@ -1,8 +1,5 @@
 # sheet music
- - BPM: 180
- - C Major
- - quarter note: 0.15s, 0.05s rest
- - eighth note: 0.3s, 0.05s rest 
+This music's BPM is 180, which means it plays 180 quarter notes per minute, so every quarter notes lasts for 60s/180 = 0.33s
 
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/852b3ee5-d846-442b-abe8-6c2203a4c951)
 # Notes and its correspond counter number
