@@ -58,6 +58,7 @@ reg [9:0] check_Y;
         .douta(block)
     );
 ```
+```
     //take the "check upper" for example, rest of the four directions is written in a same fashion
     U: begin 
 	if((char_Y-10'b1)>=map_u_lim) begin
