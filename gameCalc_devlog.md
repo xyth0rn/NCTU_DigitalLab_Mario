@@ -43,7 +43,32 @@ Use buttons on Nexys4 DDR to control character movement.
     );
 ```
   - I have tried some different methods and thoughts during the development
-1.
+1.try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
+  - I try to use FSM to transfer between check up/down/left/right pixel of current location
+```
+parameter REST = 3'd0, U = 3'd1, D = 3'd2, L = 3'd3, R = 3'd4;
+reg [2:0] state_check_blocking=3'd0;
+reg [9:0] check_X;
+reg [9:0] check_Y;
+
+    blk_mem_gen_2 blocking_ram (
+        .clka(sys_clk),
+
+        .addra({10'b0, check_X}+{10'b0, check_Y}*20'd960), //read the pixel we want to check
+        .douta(block)
+    );
+```
+    //take the "check upper" for example, rest of the four directions is written in a same fashion
+    U: begin 
+	if((char_Y-10'b1)>=map_u_lim) begin
+		check_X<=char_X;
+		check_Y<=char_Y-10'b1; //check the pixel: (current_char_X, current_char_Y-1)
+		if(block) upward<=1'b0;  //if encounter blocking object, lock the ability to go upward
+		else upward<=1'b1;
+	end
+    end
+```
+  - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
 2.
 
   - final method
