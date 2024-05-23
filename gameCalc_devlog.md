@@ -102,8 +102,7 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
-
-    - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+  - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
  (示意圖)
 
 - final method
