@@ -71,9 +71,37 @@ reg [9:0] check_Y;
 ```
   - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
-  2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adapted a method which is ""
- 
-  3. 
+  2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adapted a method which is "record the last movement, once encounter block, cannot go further"
+    - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
+```
+        if(block) begin //"lock"
+		if(last_mov[3]) upward=1'b0;
+		if(last_mov[2]) downward=1'b0;
+		if(last_mov[1]) backward=1'b0;
+		if(last_mov[0]) forward=1'b0;
+	end
+	else begin //"unlock"
+		if(last_mov[3]) downward=1'b1;
+		if(last_mov[2]) upward=1'b1;
+		if(last_mov[1]) forward=1'b1;
+		if(last_mov[0]) backward=1'b1;
+	end
+```
+```
+        //need to check if the direction is lock or not before every movement
+        if(char_X==map_l_lim) begin
+            char_X<=char_X; //cannot move anymore
+        end
+	else if(mov[1]==1'b1 && backward) begin
+		char_X<=char_X-10'd1;
+		last_mov[1]<=1'b1; 
+		last_mov[0]<=1'b0;
+	end
+	else if(backward==1'b0 && last_backward==1'b1) begin
+		char_X<=char_X+10'd1;
+	end
+```
+  4.
 
 - final method
 
