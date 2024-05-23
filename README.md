@@ -9,15 +9,15 @@
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/system%20architecture%20update.png)
 
 - Input Controls
-  - 12-key Keypad
+  - buttons
 - Game Calculations
   - Character
-    > Reads keypad input to update `ch_pos` (move character position)
+    > Reads button input to update `ch_pos` (move character position)
     > Checks if movement is legal with `blocking_map`
   - Scroll<br>
     > Determine `frame_pos` (current location on the full background) based on `ch_pos` to keep character always on screen
   - Blocking
-    > Combines locations of interactive objects with `background_landscape` (ROM) to determine where characters are not allowed to enter (e.g. walls, floor, and blocks)<br>
+    > Combines locations of interactive objects with `background_landscape` (RAM) to determine where characters are not allowed to enter (e.g. walls, floor, and blocks)<br>
     > Saves result as `blocking_map`
   - Interactive Objects
 - Frame Rendering
