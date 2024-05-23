@@ -43,7 +43,8 @@ Use buttons on Nexys4 DDR to control character movement.
     );
 ```
   - I have tried some different methods and thoughts during the development
- ### 1. try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
+ ### method 1 
+  - try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
   - I try to use FSM to transfer between check up/down/left/right pixel of current location
 ```
 parameter REST = 3'd0, U = 3'd1, D = 3'd2, L = 3'd3, R = 3'd4;
@@ -69,9 +70,10 @@ reg [9:0] check_Y;
 	end
     end
 ```
- ### result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
+  - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
- ### 2. I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
+ ### method 2 
+  - I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
 ```
         if(block) begin //"lock"
@@ -101,7 +103,7 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
- ### result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+ - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
  (示意圖)
 
 ### final method
