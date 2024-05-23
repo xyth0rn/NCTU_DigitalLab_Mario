@@ -27,5 +27,19 @@
 - A5(880Hz):  `56818`
 - B5(987Hz):  `50658`
 ## pitch generator
-- There're three inputs
-  - `rest`
+- There're three important inputs
+  - `counter`: Decide which pitch we want to play
+  - `rest`: 1 for rest notes, 0 for regular notes
+  - `eight`: 1 for eighth notes, 0 for quarter notes
+- Two outputs
+  - `next_note`: When a note is played to its full duration, `next_note` would be 1, telling the top module proceed to the next note
+  - `note`: the pitch we want to play
+```
+module note (input clk_100MHz,
+              input [17:0] counter,
+              input rest,
+              input eight,
+              output next_note,
+              output note
+);
+```
