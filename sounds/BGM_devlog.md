@@ -46,6 +46,7 @@ module note (input clk_100MHz,
 ```
 ## Top module: A Finite State Machine
 - A note is a state. In every state, we input different `counter`, `rest` and `eight` to generate the specific pitch.
+  - Totally 188 states...
 ```
 always@(*)
   begin
@@ -78,5 +79,14 @@ always@(*)
     endcase
   end
 ```
-- Totally 188 states...
+
 - Next State Logic
+  ```
+  always@(posedge next_note)
+  begin
+    if(state == 188)
+      state <= 0;
+    else
+      state <= state + 1;
+  end
+  ```
