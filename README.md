@@ -40,7 +40,7 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 ## Development and Method
 [Video Output Development](videoOutput_devlog.md) <br>
 [Game Calculations Development](gameCalc_devlog.md) <br>
-[Level Design Development](levelDesign.md) <br>
+[Level Design Development](levelDesign_devlog.md) <br>
 [Background Music Development](bgm_devlog.md) <br>
 
 ## Reference
