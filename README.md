@@ -1,4 +1,4 @@
-# FPGA Mario: Everything is Annoying
+# FPGA Mario: Except Everything is Annoying
 2024 Spring Digital Lab EEEC10005 final project <br>
 Group members: 黃仲璿、嚴得睿、張閔傑
 
