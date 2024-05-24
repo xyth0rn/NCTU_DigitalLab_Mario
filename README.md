@@ -1,5 +1,5 @@
 # FPGA Mario: Except Everything is Annoying
-2024 Spring Digital Lab EEEC10005 final project <br>
+NYCU 2024 Spring Digital Lab EEEC10005 final project <br>
 Group members: 黃仲璿、嚴得睿、張閔傑
 
 This is an attempt to create an Mario-inspired 2D platformer game using the Nexys4 DDR FPGA board. The game level is homemade and carefully designed to convey the annoyance and irritation we've confronted during the development process of this project. 
