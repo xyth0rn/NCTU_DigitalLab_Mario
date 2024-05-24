@@ -46,3 +46,19 @@ module note (input clk_100MHz,
 ```
 ## Top module: A Finite State Machine
 - A note is a state. In every state, we input different `counter`, `rest` and `eight` to generate the specific pitch.
+```
+always@(*)
+  begin
+    case(state)
+      //first section
+      10'd0: begin //eighth E5
+               counter = 18'd75873;
+               rest = 0;
+               eight = 1;             
+             end
+      10'd1: begin  //eighth E5
+               counter = 18'd75873;
+               rest = 0;
+               eight = 1;     
+             end
+  
