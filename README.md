@@ -1,9 +1,15 @@
-# NCTU_DigitalLab_Mario
-2024 Spring Digital Lab EEEC10005 final project
+# FPGA Mario: Everything is Annoying
+2024 Spring Digital Lab EEEC10005 final project <br>
+Group members: 黃仲璿、嚴得睿、張閔傑
+
+This is an attempt to create an Mario-inspired 2D platformer game using the Nexys4 DDR FPGA board. The game level is homemade and carefully designed to convey the annoyance and irritation we've confronted during the development process of this project. 
+
+Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 
 ## System Specification
 - FPGA Board: Nexys4 DDR
-- Screen Resolution: 640 x 480 pixels
+- VGA Screen
+- Speaker
 
 ## System Architecture
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/system%20architecture%20update.png)
