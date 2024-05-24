@@ -38,7 +38,7 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
   > print `image` onto screen
 
 ## Development and Method
-[Video Output Development](video_devlog.md) <br>
+[Video Output Development](videoOutput_devlog.md) <br>
 [Game Calculations Development](gameCalc_devlog.md) <br>
 [Level Design Development](levelDesign.md) <br>
 [Background Music Development](bgm_devlog.md) <br>
