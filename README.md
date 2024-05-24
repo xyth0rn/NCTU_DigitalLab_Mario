@@ -35,7 +35,7 @@
 [Video Output Development](video_output/Video_devlog.md) <br>
 [Game Calculations Development](game_calc/gameCalc_devlog.md) <br>
 [Level Design Development](map_and_sprites/level_design.md) <br>
-[Background Music Development](sounds/BGM_devlog) <br>
+[Background Music Development](sounds/BGM_devlog.md) <br>
 
 ## Reference
 [1] https://projectf.io/posts/hardware-sprites/
