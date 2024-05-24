@@ -32,10 +32,10 @@
   > print `image` onto screen
 
 ## Development and Method
-[Video Output Development](Video_devlog.md) <br>
-[Game Calculations Development](gameCalc_devlog.md) <br>
-[Level Design Development](level_design.md) <br>
-[Background Music Development](BGM_devlog) <br>
+[Video Output Development](video_output/Video_devlog.md) <br>
+[Game Calculations Development](game_calc/gameCalc_devlog.md) <br>
+[Level Design Development](map_and_sprites/level_design.md) <br>
+[Background Music Development](sounds/BGM_devlog) <br>
 
 ## Reference
 [1] https://projectf.io/posts/hardware-sprites/
