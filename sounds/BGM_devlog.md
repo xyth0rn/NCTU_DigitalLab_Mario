@@ -44,6 +44,11 @@ module note (input clk_100MHz,
               output note
 );
 ```
+- we set up a `beat_counter` which will increment by 1 whenever recieve a posedge clk_1000Hz signal. So, if the `eight` is 1, the `beat_counter` will count to 200 and return to 0 (0.15s sound output and 0.05s break). On the other hand, if the `eight` is 0, it will count to 350 and return to 0 (0.3s sound output and 0.05s break).
+- sound output logic
+```
+assign note = clk_out & ~rest & ((eight & (beat_counter <= 150)) | (~eight & (beat_counter <= 300)));
+```
 ## Top module: A Finite State Machine
 - A note is a state. In every state, we input different `counter`, `rest` and `eight` to generate the specific pitch.
   - Totally 188 states...
