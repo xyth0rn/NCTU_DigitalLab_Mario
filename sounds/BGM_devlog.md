@@ -61,4 +61,22 @@ always@(*)
                rest = 0;
                eight = 1;     
              end
-  
+            .
+            .
+            .
+            .
+      10'd187: begin  //eighth G4
+                 counter = 18'd127551;
+                 rest = 0;
+                 eight = 1;
+               end
+      10'd188: begin  //quarter rest
+                 counter = 18'd0;
+                 rest = 1;
+                 eight = 0;
+               end
+    endcase
+  end
+```
+- Totally 188 states...
+- Next State Logic
