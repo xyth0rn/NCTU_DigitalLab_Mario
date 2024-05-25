@@ -18,6 +18,7 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 
 
 ## System Architecture
+![image](final_srcs/architecture_diagrams/systemArchitecture.png)
 
 - Input Controls
 	- On-board Buttons
