@@ -466,7 +466,7 @@ Take the rest of stars, then you win.
 
 
 
-## Background Music Development Log
+## Background Music Development
 ### Calculate How Long Each Note Should Last
  - In general, we can mainly categorize the notes in this sheet music into `quarter notes` and `eighth notes`.
  - This music's BPM is 180, which means it plays 180 quarter notes per minute, so every quarter notes lasts for 60s/180 = 0.33s. For convenience, we let it be 0.3s. Therefore the eighth note should last for 0.3s/2 = 0.15s. 
@@ -567,7 +567,7 @@ always@(*)
 
 
 
-## Objects Development Log
+## Objects Development
 - All objects can be classified into two categories: those that can kill the player and those that cannot kill the player.
   - Those can kill the player: `Goomba`, `Goomba tower`, `koopa troopa` and `poison star`.
   - Those cannot kill the player: `Fire flower`, `Ice mashroom`, `flying mashroom` and `star1~5`.
@@ -620,6 +620,26 @@ always@(posedge sys_clk or negedge RST_N)
         touch <= touch;
     end
 ```
+
+
+
+## Result
+Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
+
+
+
+## Conclusion
+
+
+
+## Discussion
+During the development process of this project, we've encountered several bugs that are tricky yet interesting. These bugs often imply certain flaws or details we overlooked.
+
+### VGA Sync Timing Issues
+VGA output relies on two clocking signals: horizontal sync (`VGA_HS`) and vertical sync (`VGA_VS`). These two signals help synchronize VGA output and are determined by the coordinates of the printing pointer (`hcount` and `vcount` in our source code). By examining the VGA timing diagram and the industrial standard for 640x480 resolution, it is obvious that the `VGA_HS` should be pulled high when `hcount > VGA_HS_end`, and `VGA_VS` should be pulled high when `vcount > VGA_VS_end`  (`VGA_HS_end = 10'd95` and `VGA_VS_end = 10'd1` by industrial standards). At first glance this appear to be a simple combinational logic. However, when attempting to assign `VGA_HS` and `VGA_VS` using combinational logic, the VGA timing signals become completely jammed and would output an incorrect mashed-up image. Although unsure about the exact reason behind this issue, we speculated that this might be caused by unstable signals due to combinational logic. So, sequential logic was tested. To our surprise, simply reconstructing the logic using an always-block solved the abnormal timing issue. Our hypothesis is that by utilizing flip-flops, this method guarantees that both signals can only be altered synchronously with each other and the 25 MHz clock that were used for all internal calculations.
+
+### 24-bit to 9-bit Color Compression
+As previously mentioned, our first attempt to compress the image data from 24-bit to 9-bit failed and would output a red-toned image. We originally did not suspect the bug to be within the file conversion python code, but instead believed firmly that this must be caused by VGA timing issues.----------------------------------------------------------
 
 
 ## Reference
