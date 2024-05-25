@@ -33,3 +33,20 @@ else if( (((char_X >= goomba_x_r) && (char_X <= goomba_x_r + 10'd12)) || ((char_
 ```
 ### stars, fire flower, flying mashroom and ice mashroom
 - `touch` is initialize to 0. when Mario touch these objects, toggle `touch` to 1, and keep output 1 until detect negedge `RST_N`.
+```
+always@(posedge sys_clk or negedge RST_N)
+    begin
+      if(!RST_N)
+        begin
+          enable <= 1'b1;
+          touch <= 1'b0;
+        end
+      else if( ((((char_X >= star1_x_r) && (char_X <= star1_x_r + 10'd12)) || ((char_X + 10'd12 >= star1_x_r) && (char_X + 10'd12 <= star1_x_r + 10'd12)))) & ((((char_Y >= star1_y_r) && (char_Y <= star1_y_r + 10'd12)) || ((char_Y + 10'd12 >= star1_y_r) && (char_Y + 10'd12 <= star1_y_r + 10'd12)))) ) 
+        begin 
+          enable <= 1'b0;
+          touch <= 1'b1;
+        end
+      else
+        touch <= touch;
+    end
+```
