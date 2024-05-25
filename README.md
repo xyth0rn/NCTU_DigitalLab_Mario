@@ -41,7 +41,7 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
   - Char_spr, star_spr, goomba_spr... (RAM)
     > Stores color data of character and each object's sprite image.
 - Sound Output
-  > Plays backgroun music using a speaker.
+  > Plays background music using a speaker.
 - Star Output
 	- On-board Seven-segment Display
 		> Displays game status (number of stars collected). <br>
