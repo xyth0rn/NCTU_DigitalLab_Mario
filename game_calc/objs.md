@@ -3,7 +3,8 @@
   - Those can kill the player: `Goomba`, `Goomba tower`, `koopa troopa` and `poison star`.
   - Those cannot kill the player: `Fire flower`, `Ice mashroom`, `flying mashroom` and `star1~5`.
 - In every objects module, the inputs are `sys_clk`, `char_X` and `char_Y`. outputs are `objects_X`, `objects_Y` and `en`, and some special signals.
-  - `objects_X`, `objects_Y` and `en` would be inputs of `SPR_CTRL`, special signal would be inputs of `Char`. 
+  - `objects_X`, `objects_Y` and `en` would be inputs of `SPR_CTRL`, special signal would be inputs of `Char`.
+  - !!! remember to output RELATIVE X_COORDINATE to `SPR_CTRL` !!! or objects will moving with screen scrolling.
 ## The game mechanics of objects
  ### Goomba Tower
   - Automatically moving back and forth in the Goomba room
