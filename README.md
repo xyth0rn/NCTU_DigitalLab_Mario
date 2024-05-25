@@ -42,9 +42,11 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
     > Stores color data of character and each object's sprite image.
 - Sound Output
   > Plays backgroun music using a speaker.
-- On-board Seven-segment Display and LED
-  > Displays game status (number of stars collected). <br>
-	> LED series displays a light show marquee when the player completes the game.
+- Star Output
+	- On-board Seven-segment Display
+		> Displays game status (number of stars collected). <br>
+  - On-board LED
+    > LED series displays a light show marquee when the player completes the game.
 
 
 
