@@ -12,6 +12,7 @@
 ```
 assign death = ((char_X + 10'd12 == goomba_tower_x_r) | (char_X == goomba_tower_x_r + 10'd12)) & (char_Y > goomba_tower_y_r) ;
 ```
+(Either one side of character touch the Goomba tower and character is below the Goomba tower)
 ### Goomba and Koopa Troopa
  - standing statically, wait for Mario to step on or touch them.
    - send a death signal if Mario touching them from to sides.
@@ -19,7 +20,16 @@ assign death = ((char_X + 10'd12 == goomba_tower_x_r) | (char_X == goomba_tower_
 ```
 assign death = ((char_X + 10'd12 == goomba_x_r) | (char_X == goomba_x_r + 10'd12)) & (char_Y == goomba_y_r) & enable;
 ```
+(Either one side of character is touched, the objects and character are in the same height)
 ```
 else if( (((char_X >= goomba_x_r) && (char_X <= goomba_x_r + 10'd12)) || ((char_X + 10'd12 >= goomba_x_r) && (char_X + 10'd12 <= goomba_x_r + 10'd12))) && (char_Y + 10'd12 == goomba_y_r) )
        enable <= 1'b0;
-```  
+```
+(char_X is within the range of objects and character's bottom is equal to the objects' top)
+### poison star
+- kill the player no matter which side the player touch it.
+```
+ assign death =  ((((char_X >= poison_star_x_r) && (char_X <= poison_star_x_r + 10'd12)) || ((char_X + 10'd12 >= poison_star_x_r) && (char_X + 10'd12 <= poison_star_x_r + 10'd12)))) & ((((char_Y >= poison_star_y_r) && (char_Y <= poison_star_y_r + 10'd12)) || ((char_Y + 10'd12 >= poison_star_y_r) && (char_Y + 10'd12 <= poison_star_y_r + 10'd12))));
+```
+### stars, fire flower, flying mashroom and ice mashroom
+- `touch` is initialize to 0. when Mario touch these objects, toggle `touch` to 1, and keep output 1 until detect negedge `RST_N`.
