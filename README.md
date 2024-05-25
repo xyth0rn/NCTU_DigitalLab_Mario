@@ -18,7 +18,7 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 
 
 ## System Architecture
-![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/system%20architecture%20update.png)
+![image](final_srcs/architecture_diagrams/systemArchitecture.png)
 
 - Input Controls
 	- On-board Buttons
