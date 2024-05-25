@@ -232,7 +232,7 @@ Use buttons on Nexys4 DDR to control character movement.
 	end
 ```
  
-### dealing with blocking 
+### Dealing with Blocking 
   - goal: unable mario from passing through some blocking objects (ground, wall...)
   - read the "blocking map" from RAM, for each pixel, there's a bit indicates whether it's a legal location where mario can access (0 = character can walk through; 1 = character cannot walk through)
 ```
@@ -244,7 +244,7 @@ Use buttons on Nexys4 DDR to control character movement.
     );
 ```
   - I have tried some different methods and thoughts during the development
- #### method 1 
+ #### Method 1 
   - try to "pre-read", i.e. try to get the status of next pixel in four direction to determine if mario can pass through those pixel before it move
   - I try to use FSM to transfer between check up/down/left/right pixel of current location
 ```
@@ -273,7 +273,7 @@ reg [9:0] check_Y;
 ```
   - result: failed, it won't move at all. Maybe there's some clock issue in my implementation.
     
- #### method 2 
+ #### Method 2 
   - I decided to design the mechanism base on the fact that I can only get the information of "the current pixel", I adopted a method which is "record the last movement, once encounter block, cannot go further"
     - for example: if mario move forward and the next pixel is a blocking object, once it arrives the pixel, it cannot move forward again until it move backward
 ```
@@ -304,9 +304,9 @@ reg [9:0] check_Y;
 		char_X<=char_X+10'd1;
 	end
 ```
- - result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
+ - Result: failed, mario will stuck in the ground due to the presence of gravity system (if we are standing on a ground and want to move forward and backward, we can only move one pixel and it will be locked)
 
-#### final method
+#### Final Method
   - to solve the problem of method 2, I decided to add a "send back" mechanism, which is adding a "send back" mechanism and alter the record of past information from "record the last movement" to "record the last location (absolute coordinate)". If it encounter a blocking pixel, it will be sent back to the last position.
 ```
 	//take move backward for example
@@ -348,7 +348,7 @@ reg [9:0] check_Y;
 ```
  - result: succeed
     
-### transport mechanism
+### Transport Mechanism
   - store all absolute coordinate of each portal (door and pipe) by parameters
 ```
 parameter door_A_X=10'd350, door_A_Y=10'd50, door_B_X=10'd55, door_B_Y=10'd25, door_C_X=10'd50, door_C_Y=10'd205;
@@ -455,17 +455,17 @@ https://www.iloveimg.com/crop-image/crop-png
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/588778e2-956c-4386-8a16-3873c600c468) <br>
 There's a poisonous star, which is next to the goomba.
 Take the rest of stars, then you win.
-#### objects
+#### Objects
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/94b1b6f9-88f4-45eb-8484-8c19d6a1017c) <br>
 
-#### stage 1
+#### Stage 1
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/6aa0d030-2828-4624-9b6e-e9202a780df0) <br>
 - Door A & Door B: Teleport to Goomba room
 - Door C: teleport to Door D
 - Door E: teleport to stage 2
 - Pipe F: Teleport to (have flying_mashroom)? G : Goomba room
 
-#### stage 2
+#### Stage 2
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/8473465a-1647-4689-a586-22210618c393) <br>
 - Pipe A & Pipe C: teleport to Goomba room
 - Pipe B: teleport to D
@@ -476,14 +476,14 @@ Take the rest of stars, then you win.
 
 
 ## Background Music Development Log
-### calculate how long each note should last
+### Calculate How Long Each Note Should Last
  - In general, we can mainly categorize the notes in this sheet music into `quarter notes` and `eighth notes`.
  - This music's BPM is 180, which means it plays 180 quarter notes per minute, so every quarter notes lasts for 60s/180 = 0.33s. For convenience, we let it be 0.3s. Therefore the eighth note should last for 0.3s/2 = 0.15s. 
  - We must insert a break between the two notes, otherwise two consecutive eighth notes of the same pitch will sound like a quarter note. Thus we add a additional 0.05s break to distinguish two consecutive notes of the same pitch.
  - To sum up, every `quarter note` would last for 0.3s, followed by 0.05s break. Every `eighth note` would last for 0.15s, followed by 0.05s break.
 
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/167954410/852b3ee5-d846-442b-abe8-6c2203a4c951)
-### calculate every pitch's correspond counter number
+### Calculate Every Pitch's Correspond Counter Number
 - Every pitch come from a frequency divider whose input clock signal is 100MHz, so we must calculate the counter number to get the accurate frequency.
 - Formula: 100M / pitch's frequency / 2
   - C4(261Hz):  `190839`
@@ -504,8 +504,8 @@ Take the rest of stars, then you win.
   - G5(783Hz):  `63776`
   - A5(880Hz):  `56818`
   - B5(987Hz):  `50658`
-### pitch generator
-- There're three important inputs
+### Pitch Generator
+- There are three important inputs
   - `counter`: Decide which pitch we want to play
   - `rest`: 1 for rest notes, 0 for regular notes
   - `eight`: 1 for eighth notes, 0 for quarter notes
@@ -526,7 +526,7 @@ module note (input clk_100MHz,
 ```
 assign note = clk_out & ~rest & ((eight & (beat_counter <= 150)) | (~eight & (beat_counter <= 300)));
 ```
-### Top module: A Finite State Machine
+### Top Module: A Finite State Machine
 - A note is a state. In every state, we input different `counter`, `rest` and `eight` to generate the specific pitch.
   - Totally 188 states...
 ```
@@ -572,14 +572,18 @@ always@(*)
       state <= state + 1;
   end
   ```
+
+
+
+
 ## Objects Development Log
-- All Objects can be classified into two categories: those that can kill the player and those that cannot kill the player.
+- All objects can be classified into two categories: those that can kill the player and those that cannot kill the player.
   - Those can kill the player: `Goomba`, `Goomba tower`, `koopa troopa` and `poison star`.
   - Those cannot kill the player: `Fire flower`, `Ice mashroom`, `flying mashroom` and `star1~5`.
 - In every objects module, the inputs are `sys_clk`, `char_X` and `char_Y`. outputs are `objects_X`, `objects_Y` and `en`, and some special signals.
   - `objects_X`, `objects_Y` and `en` would be inputs of `SPR_CTRL`, special signal would be inputs of `Char`.
-  - !!! remember to output RELATIVE X_COORDINATE to `SPR_CTRL` !!! or objects will moving with screen scrolling.
-### The game mechanics of objects
+  - *IMPORTANT: output RELATIVE X_COORDINATE to `SPR_CTRL`* or objects will moving with screen scrolling.
+### Game Mechanics of Objects
  #### Goomba Tower
   - Automatically moving back and forth in the Goomba room
     - moving range: 100 pixels
@@ -591,7 +595,7 @@ assign death = ((char_X + 10'd12 == goomba_tower_x_r) | (char_X == goomba_tower_
 #### Goomba and Koopa Troopa
  - standing statically, wait for Mario to step on or touch them.
    - send a death signal if Mario touching them from to sides.
-   - If Mario step on their head, they will dead and then disappear.
+   - If Mario step on their head, they will die and then disappear.
 ```
 assign death = ((char_X + 10'd12 == goomba_x_r) | (char_X == goomba_x_r + 10'd12)) & (char_Y == goomba_y_r) & enable;
 ```
@@ -601,12 +605,12 @@ else if( (((char_X >= goomba_x_r) && (char_X <= goomba_x_r + 10'd12)) || ((char_
        enable <= 1'b0;
 ```
 (char_X is within the range of objects and character's bottom is equal to the objects' top)
-#### poison star
+#### Poison Star
 - kill the player no matter which side the player touch it.
 ```
  assign death =  ((((char_X >= poison_star_x_r) && (char_X <= poison_star_x_r + 10'd12)) || ((char_X + 10'd12 >= poison_star_x_r) && (char_X + 10'd12 <= poison_star_x_r + 10'd12)))) & ((((char_Y >= poison_star_y_r) && (char_Y <= poison_star_y_r + 10'd12)) || ((char_Y + 10'd12 >= poison_star_y_r) && (char_Y + 10'd12 <= poison_star_y_r + 10'd12))));
 ```
-#### stars, fire flower, flying mashroom and ice mashroom
+#### Stars, Fire Flower, Flying Mushroom and Ice Mushroom
 - `touch` is initialize to 0. when Mario touch these objects, toggle `touch` to 1, and keep output 1 until detect negedge `RST_N`.
 ```
 always@(posedge sys_clk or negedge RST_N)
