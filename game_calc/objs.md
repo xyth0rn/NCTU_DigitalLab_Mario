@@ -7,4 +7,8 @@
 ## The game mechanics of objects
 - Goomba Tower
   - Automatically moving back and forth in the Goomba room
+
   - Kill the player whenever touching it. 
+```
+assign death = ((char_X + 10'd12 == goomba_tower_x_r) | (char_X == goomba_tower_x_r + 10'd12)) & (char_Y > goomba_tower_y_r) ;
+```
