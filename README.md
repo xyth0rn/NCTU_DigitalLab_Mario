@@ -6,42 +6,57 @@ This is an attempt to create an Mario-inspired 2D platformer game using the Nexy
 
 Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 
+
+
+
 ## System Specification
 - FPGA Board: Nexys4 DDR
 - VGA Screen
 - Speaker
 
+
+
+
 ## System Architecture
 ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/system%20architecture%20update.png)
 
 - Input Controls
-  - buttons
+	- On-board Buttons
 - Game Calculations
-  - Character
-    > Reads button input to update `ch_pos` (move character position)
-    > Checks if movement is legal with `blocking_map`
-  - Scroll<br>
-    > Determine `frame_pos` (current location on the full background) based on `ch_pos` to keep character always on screen
-  - Blocking
-    > Combines locations of interactive objects with `background_landscape` (RAM) to determine where characters are not allowed to enter (e.g. walls, floor, and blocks)<br>
-    > Saves result as `blocking_map`
-  - Interactive Objects
-- Frame Rendering
-  - Frame
-    > Capture the current frame from the full background picture using `frame_pos`
-  - Sprite
-    > Bitwise compare `ch_pos` with current frame. If current bit is a character and current bit is not transparent, output pixel of character; otherwise output pixel of background.<br>
-    > Does the same for interactive objects.<br>
-  - Video Buffer
-    > Render sprites and frame together to generate final `image`
-- VGA output
-  > print `image` onto screen
+	- Character
+		> Reads button inputs to move character position (`char_pos`) and checks if movement is legal using `Blocking Map`.
+  - Scrolling
+    > Update frame position (`bg_pos`) to keep character within the screen.
+  - Objects
+    > Calculate interactions between the character and objects.
+  - Blocking Map (RAM)
+    > Stores where the character is not allowed to enter (e.g. walls, floor, etc)
+- Video Output
+	- Sprite Control
+		> Read color data of each character / object and passes the data to `VGA Control`.
+ 	- VGA Control
+		> Renders all sprites and background to output onto the screen.
+  - Background (RAM)
+    > Stores color data of the background image.
+  - Char_spr, star_spr, goomba_spr... (RAM)
+    > Stores color data of character and each object's sprite image.
+- Sound Output
+  > Plays backgroun music using a speaker.
+- On-board Seven-segment Display and LED
+  > Displays game status (number of stars collected). <br>
+	> LED series displays a light show marquee when the player completes the game.
+
+
+
 
 ## Development and Method
 [Video Output Development](videoOutput_devlog.md) <br>
 [Game Calculations Development](gameCalc_devlog.md) <br>
 [Level Design Development](levelDesign_devlog.md) <br>
 [Background Music Development](bgm_devlog.md) <br>
+
+
+
 
 ## Video Processor Development
 ### Literature Review
@@ -180,6 +195,9 @@ Overlays movable sprites on top of VRAM.
   - Load init file = `.coe file location`
   - *Additional output* `vga_end`: outputs a pulse signal when finish printing whole screen
 - Compares sprite with vram to decide which color data to print onto screen
+
+
+
 
 ## Internal Game Calculations Development
 ### Character Movement and Control
@@ -405,6 +423,9 @@ Convert the 32-bit PNG background file into a 1-bit COE file by reading the RGBA
 - Type in the filename of the PNG file
 - Receive COE file under the same directory named `<in_filename>_1bitcoe_landscape.coe`
 
+
+
+
 ## Designing Level Map
 ### WiiBaFu: Extract New Super Mario Wii Game Data
 https://github.com/larsenv/Wii-Backup-Fusion <br>
@@ -448,6 +469,7 @@ Take the rest of stars, then you win.
 - Pipe B: teleport to D
 - Pipe E & Pipe F: teleport to Goomba room
 - Pipe G: teleport to H
+
 
 
 
