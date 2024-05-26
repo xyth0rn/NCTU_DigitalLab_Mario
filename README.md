@@ -1,5 +1,5 @@
 # FPGA Mario: Except Everything is Annoying
-NYCU 2024 Spring Digital Lab EEEC10005 final project <br>
+NYCU 2024 Spring Digital Lab EEEC10005 Final Project <br>
 Group members: 黃仲璿、嚴得睿、張閔傑
 
 This is an attempt to create an Mario-inspired 2D platformer game using the Nexys4 DDR FPGA board. The game level is homemade and carefully designed to convey the annoyance and irritation we've confronted during the development process of this project. 
@@ -623,12 +623,12 @@ always@(posedge sys_clk or negedge RST_N)
 
 
 
-## Result
-Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
+## Result and Conclusion
+In this project, we realised a Mario-inspired FPGA-based horizontal scrolling 2D platform game by combining VGA output, image conversion, sound and on-board outputs, and internal game calculations. All image files are converted into 9-bit RGB color code format and stored within the BRAM of the Nexys4 DDR FPGA. This project provided a comprehensive challenge for us to utilize everything we learned in this course and even pushed us to learn new knowledge such as VGA timing and register delays.
 
+Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4
 
-
-## Conclusion
+We are aware that this project has a lot of potential improvements due to time pressure. For example, we originally planned to add a sprite with the words "Course Clear" or "Mario Clear" to show when the player completes the level. However the idea was ditched since there wasn't enough space left in the BRAM and we didn't have time to switch the storage system from BRAM to Flash. Another potential amendment is the collision system. We didn't have enough time to fine-tune the collision calculations, so Mario can be seen to sometimes appear within walls. Though this doesn't much affect the overall gameplay, but fixing this slight bug could improve the user experience.
 
 
 
@@ -638,14 +638,27 @@ During the development process of this project, we've encountered several bugs t
 ### VGA Sync Timing Issues
 VGA output relies on two clocking signals: horizontal sync (`VGA_HS`) and vertical sync (`VGA_VS`). These two signals help synchronize VGA output and are determined by the coordinates of the printing pointer (`hcount` and `vcount` in our source code). By examining the VGA timing diagram and the industrial standard for 640x480 resolution, it is obvious that the `VGA_HS` should be pulled high when `hcount > VGA_HS_end`, and `VGA_VS` should be pulled high when `vcount > VGA_VS_end`  (`VGA_HS_end = 10'd95` and `VGA_VS_end = 10'd1` by industrial standards). At first glance this appear to be a simple combinational logic. However, when attempting to assign `VGA_HS` and `VGA_VS` using combinational logic, the VGA timing signals become completely jammed and would output an incorrect mashed-up image. Although unsure about the exact reason behind this issue, we speculated that this might be caused by unstable signals due to combinational logic. So, sequential logic was tested. To our surprise, simply reconstructing the logic using an always-block solved the abnormal timing issue. Our hypothesis is that by utilizing flip-flops, this method guarantees that both signals can only be altered synchronously with each other and the 25 MHz clock that were used for all internal calculations.
 
-### 24-bit to 9-bit Color Compression
-As previously mentioned, our first attempt to compress the image data from 24-bit to 9-bit failed and would output a red-toned image. We originally did not suspect the bug to be within the file conversion python code, but instead believed firmly that this must be caused by VGA timing issues.----------------------------------------------------------
+
+### 24-bit to 9-bit Color Compression Data Loss
+As previously mentioned, our first attempt to compress the image data from 24-bit to 9-bit failed and would output a red-toned image. We originally did not suspect the bug to be within the file conversion python code, but instead believed firmly that this must be caused by VGA timing issues because the VGA sync timing issue previously mentioned resulted in a similar red-toned screen. However when we inspected the converted COE file, we figured that our program was outputting exactly as the COE file. It turns out that the problem was caused by the unthoughtful trimming and concatenation of color data bits. We then switched to a linear tranformation between 24-bit and 9-bit color data. The result was closer to the original image in terms of contrast and relative color, but the overall color scheme lost a lot of color detail. For example, the portal doors used to have a lot more details, but now appear to be mearly a dark brown box. This is because 9-bit color coding can only provide 512 different colors, and linearly matching the 24-bit raw file to such loses a considerable amount of coloring details. But overall the overall color reamins clear and the appearance doesn't look too weird.
+
+
+### Sprite Render Delay
+When first attemping to achieve the mechanism of multi-sprite display, we used a sprite controlling module for each object and character and then compare all the color datas in the top module. However, this resulted in a severe error where the sprites would appear in the correct position with a correct color, but the background image was completely jammed. After consulting seniors, we figured the reason behind this bug is register-caused delays. In this method, the number of registers the color from sprites data passes through is different between sprites and background. This implies that at the final comparison to decide what color to output, the MUX would be compairing the color data of multiple sprites of the current pixel with the color data of the background image of a different pixel. This is why the sprites appear to be unaffected while the background is scrambled. The solution is to have unify the number of registers every color data pass through to eliminate the delay.
+
+Demonstration of the scrambled background <br>
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/51b42e2e-889f-45a8-b545-12f9505c9ece) <br>
+
+
+Concept explanation diagram on register-caused delays <br>
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/530a04bb-3be0-4841-98a9-dfe455c02cff) <br>
+_*Blue number indicates which pixel the color data is representing_
 
 
 ## Reference
 - https://projectf.io/posts/hardware-sprites/ <br>
--  https://github.com/toivoh/rastrgrafx <br>
-- jpg to bmp converter https://cloudconvert.com/ <br>
+- https://github.com/toivoh/rastrgrafx <br>
+- https://cloudconvert.com/ <br>
 - https://stackoverflow.com/questions/54592202/24-bit-rgb-to-12-bit-conversion <br>
 - http://www.tinyvga.com/vga-timing <br>
 - https://projectf.io/posts/video-timings-vga-720p-1080p/ <br>
