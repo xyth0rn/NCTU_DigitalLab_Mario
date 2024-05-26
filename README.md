@@ -18,7 +18,8 @@ Demonstration Video: https://www.youtube.com/watch?v=juEwY00mkc4 <br>
 
 
 ## System Architecture
-![image](final_srcs/architecture_diagrams/systemArchitecture.png)
+![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/64535b92-38ba-43b7-9da5-d82c38932e6d)
+
 
 - Input Controls
 	- On-board Buttons
@@ -197,8 +198,9 @@ Use buttons on Nexys4 DDR to control character movement.
 ### Gravity mechanism
   - Character will fall if there's no blocking object (ex. floor or bricks) below it
   - Realized through finite state machine
-  - state graph:
-  ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/blob/main/game_calc/pictures/gravity%20system%20FSM.png)
+  - state graph: <br>
+  ![image](https://github.com/xyth0rn/NCTU_DigitalLab_Mario/assets/49625757/5068ffef-4be6-481e-8ae2-3f5daf37a1ac)
+
   - there's some additional mechanisms to ensure the correctness of transport and blocking, which will be explained later
   - corresponding action of each state (if no additional mechanisms were triggered):
       - IDLE: do nothing
