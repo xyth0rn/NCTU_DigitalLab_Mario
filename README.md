@@ -577,7 +577,7 @@ assign death = ((char_X + 10'd12 == goomba_tower_x_r) | (char_X == goomba_tower_
 (Either one side of character touch the Goomba tower and character is below the Goomba tower)
 #### Goomba and Koopa Troopa
  - standing statically, wait for Mario to step on or touch them.
-   - send a death signal if Mario touching them from to sides.
+   - send a death signal if Mario touching them from two sides.
    - If Mario step on their head, they will die and then disappear.
 ```
 assign death = ((char_X + 10'd12 == goomba_x_r) | (char_X == goomba_x_r + 10'd12)) & (char_Y == goomba_y_r) & enable;
